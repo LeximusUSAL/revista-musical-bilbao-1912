@@ -24,7 +24,7 @@ La **Revista Musical de Bilbao** fue una publicación musical española que circ
 
 ## 📖 Uso
 
-1. Abre `revista_musical_bilbao_viewer.html` en tu navegador web
+1. Abre `[revista_musical_bilbao_viewer.html](https://leximususal.github.io/revista-musical-bilbao-1912/revista_musical_bilbao_viewer.html)` en tu navegador web
 2. Navega entre páginas usando:
    - Selector de página en la parte superior
    - Botones anterior/siguiente
@@ -33,11 +33,7 @@ La **Revista Musical de Bilbao** fue una publicación musical española que circ
 
 ## 🎯 Contexto Académico
 
-Este visor forma parte del proyecto de investigación **"LexiMus: Léxico y ontología de la música en español"** desarrollado por:
-
-- Universidad de Salamanca
-- Instituto Complutense de Ciencias Musicales  
-- Universidad de La Rioja
+Este visor forma parte del proyecto de investigación **"LexiMus: Léxico y ontología de la música en español"** desarrollado por Universidad de Salamanca. En colaboración con ICCMU y UR.
 
 **Proyecto financiado:** PID2022-139589NB-C33
 
@@ -54,7 +50,6 @@ El número incluye artículos sobre:
 - **OCR especializado** en textos históricos españoles
 - **Corrección manual** de transcripciones automáticas
 - **Validación académica** del contenido transcrito
-- **Precisión estimada:** 85-90% en identificación de entidades
 
 ---
 
