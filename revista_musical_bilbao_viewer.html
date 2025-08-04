@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Revista Musical de Bilbao - 1912 - Visor Digital</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: #333;
+            min-height: 100vh;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #8b4513 0%, #a0522d 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        .header h1 {
+            font-size: 2.2em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .navigation {
+            background: #34495e;
+            padding: 15px;
+            text-align: center;
+            border-bottom: 3px solid #8b4513;
+        }
+
+        .page-selector {
+            display: inline-block;
+            margin: 0 10px;
+        }
+
+        .page-selector select {
+            padding: 10px 15px;
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            background: white;
+            color: #333;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .nav-buttons {
+            margin: 0 20px;
+        }
+
+        .nav-btn {
+            background: linear-gradient(135deg, #8b4513 0%, #a0522d 100%);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 0 5px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            background: linear-gradient(135deg, #a0522d 0%, #8b4513 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .page-info {
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            margin: 0 15px;
+        }
+
+        .main-container {
+            display: flex;
+            height: calc(100vh - 200px);
+            background: white;
+            margin: 20px;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .image-panel {
+            flex: 1;
+            position: relative;
+            background: #f8f9fa;
+            border-right: 3px solid #8b4513;
+            overflow: hidden;
+        }
+
+        .image-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background: white;
+        }
+
+        .page-image {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+            cursor: zoom-in;
+            transition: transform 0.3s ease;
+        }
+
+        .page-image.zoomed {
+            cursor: zoom-out;
+            transform: scale(1.5);
+        }
+
+        .text-panel {
+            flex: 1;
+            background: #f8f9fa;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .text-header {
+            background: linear-gradient(135deg, #8b4513 0%, #a0522d 100%);
+            color: white;
+            padding: 15px;
+            font-size: 1.2em;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .transcription-container {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background: white;
+        }
+
+        .text-region {
+            margin-bottom: 25px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-left: 4px solid #8b4513;
+            border-radius: 0 8px 8px 0;
+            transition: all 0.3s ease;
+        }
+
+        .text-region:hover {
+            background: #e9ecef;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        .text-region.highlighted {
+            background: #fff3cd;
+            border-left-color: #856404;
+            box-shadow: 0 0 15px rgba(255, 193, 7, 0.3);
+        }
+
+        .text-content {
+            padding: 15px;
+            background: white;
+            border-radius: 6px;
+            font-size: 16px;
+            line-height: 1.8;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid #e9ecef;
+            text-align: justify;
+            margin-bottom: 10px;
+        }
+
+        .text-content:hover {
+            background: #e3f2fd;
+            border-color: #2196f3;
+        }
+
+        .text-content.selected {
+            background: #bbdefb;
+            border-color: #1976d2;
+            font-weight: bold;
+        }
+
+        .text-line {
+            margin-bottom: 8px;
+            padding: 8px;
+            background: white;
+            border-radius: 4px;
+            font-size: 16px;
+            line-height: 1.6;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid #e9ecef;
+        }
+
+        .text-line:hover {
+            background: #e3f2fd;
+            border-color: #2196f3;
+        }
+
+        .text-line.selected {
+            background: #bbdefb;
+            border-color: #1976d2;
+            font-weight: bold;
+        }
+
+        .confidence-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+
+        .confidence-high { background-color: #4caf50; }
+        .confidence-medium { background-color: #ff9800; }
+        .confidence-low { background-color: #f44336; }
+
+        .metadata {
+            background: #e9ecef;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #6c757d;
+        }
+
+        .metadata h3 {
+            color: #495057;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .metadata p {
+            margin-bottom: 5px;
+            color: #6c757d;
+            font-size: 0.95em;
+        }
+
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            font-size: 1.2em;
+            color: #6c757d;
+        }
+
+        .error {
+            color: #dc3545;
+            text-align: center;
+            padding: 20px;
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            border-radius: 8px;
+            margin: 20px;
+        }
+
+        .search-container {
+            padding: 15px;
+            background: #e9ecef;
+            border-bottom: 2px solid #8b4513;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #8b4513;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        .search-results {
+            background: #fff3cd;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border-left: 4px solid #856404;
+            display: none;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .search-results-header {
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #856404;
+            color: #856404;
+        }
+
+        .search-result-item {
+            background: white;
+            margin: 8px 0;
+            padding: 12px;
+            border-radius: 6px;
+            border: 1px solid #dee2e6;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .search-result-item:hover {
+            background: #f8f9fa;
+            border-color: #856404;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .search-result-page {
+            font-weight: bold;
+            color: #856404;
+            font-size: 0.9em;
+            margin-bottom: 6px;
+        }
+
+        .search-result-context {
+            line-height: 1.4;
+            color: #333;
+        }
+
+        .search-result-context mark {
+            background: #ffeb3b;
+            color: #333;
+            font-weight: bold;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+
+        @media (max-width: 768px) {
+            .main-container {
+                flex-direction: column;
+                margin: 10px;
+            }
+
+            .image-panel {
+                border-right: none;
+                border-bottom: 3px solid #8b4513;
+            }
+
+            .navigation {
+                padding: 10px;
+            }
+
+            .nav-buttons {
+                margin: 10px 0;
+            }
+
+            .header h1 {
+                font-size: 1.8em;
+            }
+        }
+
+        .zoom-controls {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 100;
+        }
+
+        .zoom-btn {
+            background: rgba(139, 69, 19, 0.8);
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            margin: 2px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .zoom-btn:hover {
+            background: rgba(139, 69, 19, 1);
+        }
+
+        .page-counter {
+            background: #2c3e50;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>📚 Revista Musical de Bilbao</h1>
+        <p>Año IV - 1912 - Número 1 | Biblioteca Nacional de España | Visor Digital de Prensa Histórica</p>
+    </div>
+
+    <div class="navigation">
+        <div class="page-selector">
+            <label for="pageSelect" style="color: white; margin-right: 10px;">Página:</label>
+            <select id="pageSelect">
+                <option value="3">Página 3 (Portada)</option>
+                <option value="5">Página 5</option>
+                <option value="6">Página 6</option>
+                <option value="7">Página 7</option>
+                <option value="8">Página 8</option>
+                <option value="9">Página 9</option>
+                <option value="10">Página 10</option>
+                <option value="11">Página 11</option>
+                <option value="12">Página 12</option>
+                <option value="13">Página 13</option>
+                <option value="14">Página 14</option>
+                <option value="15">Página 15</option>
+                <option value="16">Página 16</option>
+                <option value="17">Página 17</option>
+                <option value="18">Página 18</option>
+                <option value="19">Página 19</option>
+                <option value="20">Página 20</option>
+                <option value="21">Página 21</option>
+                <option value="22">Página 22</option>
+                <option value="23">Página 23</option>
+                <option value="24">Página 24</option>
+                <option value="25">Página 25</option>
+                <option value="26">Página 26</option>
+                <option value="27">Página 27</option>
+                <option value="28">Página 28</option>
+                <option value="29">Página 29</option>
+                <option value="30">Página 30</option>
+            </select>
+        </div>
+
+        <div class="nav-buttons">
+            <button class="nav-btn" id="prevBtn">◀ Anterior</button>
+            <span class="page-info" id="pageInfo">Página 3 de 27</span>
+            <button class="nav-btn" id="nextBtn">Siguiente ▶</button>
+        </div>
+    </div>
+
+    <div class="page-counter">
+        <span id="pageCounter">Página 3 de 27 páginas digitalizadas</span>
+    </div>
+
+    <div class="main-container">
+        <div class="image-panel">
+            <div class="zoom-controls">
+                <button class="zoom-btn" id="zoomInBtn">🔍+</button>
+                <button class="zoom-btn" id="zoomOutBtn">🔍-</button>
+                <button class="zoom-btn" id="resetZoomBtn">⌂</button>
+            </div>
+            <div class="image-container">
+                <img id="pageImage" class="page-image" alt="Página de la revista" />
+            </div>
+        </div>
+
+        <div class="text-panel">
+            <div class="text-header">
+                📖 Transcripción Digital
+            </div>
+            <div class="search-container">
+                <input type="text" class="search-input" id="searchInput" placeholder="Buscar en toda la revista...">
+                <div class="search-results" id="searchResults"></div>
+            </div>
+            <div class="transcription-container" id="transcriptionContainer">
+                <div class="loading">Cargando transcripción...</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        class RevistaViewer {
+            constructor() {
+                this.currentPage = 3;
+                this.pages = [3, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30];
+                this.currentPageIndex = 0;
+                this.zoomLevel = 1;
+                
+                // Transcripciones completas de todas las páginas 
+                this.staticTranscriptions = {
+                    3: "REVISTA MUSICAL\nSE PUBLICA UNA VEZ AL MES\nAÑO IV - 1912\nREDACCION Y ADMINISTRACION.\nRONDA, 50.—BILBAO\nBiblioteca Naconal de España",
+                    
+                    5: "ÍNDICE\nDE LOS TRABAJOS CONTENIDOS EN ESTE TOMO\nNúmero I (Enero)\nSobre el drama lírico nacional, por Julio Gómez\nIdeas y comentarios, por Joaquin Nin (continuación)\nAcerca de un articulo, por F. Gascue.\nRecuerdos de Beethoven\nNecrología.\nMovimiento musical en España y el Extranjero. Bilbao, pot l. Zubialde y N.\nde T.; Barcelona, por V. M de Gibert; Madrid, por M. Salvador; Paris, por\nJoaquín Turina\nNoticias.\nPublicaciones recibidas, por l. Z..\nSobre el drama nacional (conclusión), por Julio Gómez.\nNúmero 2 (Febrero).\n¿Piano ó Clave?, por Joaquin Nin\nLa Primera Sinfonía de Beethoven\nMovimiento musical en España y el Extranjero. Rilbao, por I. Z.; Barcelona\npor V. M. de Gibert; Madrid, por E. M. S.; Paris, por Joaquín Turina.\nNoticias.\nNúmero 3 (Marzo)\nEl Catálogo General\n¿Pedrell plagiario? por N Otaño, S\nUn festival musical en Inglaterra, por Luis Millet\nldeas y Comentarios (continuación), por Joaquín Nin.\nMovimiento musical en España y el Extranjero, Bilbao, por l. Zubialde; Barce¬\nlona, V. M. de Gibert; Gijót, por Bu-Har; Madrid, por Cecilio de Roda; Za¬\nragoza, por Z.; Paris por Joaquin Turina\nNoticias\nNecrologia\nNúmero 4 (Abril)\nOrientaciones, por Rogelio Villar\nSobre el Catálogo general, por F. Calés y Pina\nLa Capilla Imperial Rusa, por I Z\nIdeas y Comentarios (continuación), por J. Nin.\nMovimiento musical en España y el Extranjero, Bilbao, por l. Zubialde; Barce¬\nlona, por V. M. de Gibert; Madrid, por C. R.; Valencia, E. L. Ch.; Parts,\npor Henri Collet; Roma, por E. Dagnino.\nNoticias\nPublicaciones recibidas, por l. Z\nA este numero acompaña el «Catálogo general de obras de concierto de autores es¬\nespañoles modernos.\nLa müsica profana en el reinado de Carlos I, por Cecilio Roda.\nNúmero 5 (Mayo)\n¿Piano ó Clave? por Joaquin Nin\nLa IX Sinfonia de Beethoven, por Mateo H. Barroso.\nApropósito del Catálogo General, por Conrado det Campo\nMovimiento musical en España y el Extranjero. Bilbao, por l. Zubiaide; Barce¬\nlona, por V. M. de Gibert; Madrid, por Miguel Salvador; Zaragozd, por L.;\nBruselas, por White; Paris, por H. Collet\nNoticias\nPublicaciones recibidas\nNúmero 6 (Junio)\nLa música profana en el reinado de Carlos I, por Cecilio Roda.\nSobre el Catálogo General, por Francisco Calés y Pina\nldeas y Comentarios\nMovimiento musical en España y el Extranjero. Bilbao, por l. Zubialde; Barce¬\nlona, por V. M. de Gibert; Oviedo, por X; San Sebastián, por Lushe-Mendi;\nVatencia, por Eduardo L. Chávarri; Burdeos, por J. Daene; Londres, por J.\nOlavarria; Paris, por Henri Collet\nNecrología\nNoticias\nPublicaciones recibidas\no Biblioteca Nacional de España",
+                    
+                    6: "Número 7 (Julio)\nLa música profana en el reinado de Carlos I, por Cecilio de Roda\n¿Piano o Clave? Por J.J. N.\nIdeas y Comentarios, por J. Nin\n¡Más!... Sobre el Catálogo General, por Conrado del Campo\nLa batalla de los Violines, por I.Z.\nMovimiento musical en España y el Extranjero. El Haya, por De G.; Londres, por J. Olavarría\nNoticias\nPublicaciones recibidas, por I. Z\nNúmero 8 (Agosto)\nLa música profana en el reinado de Carlos I, por Cecilio de Roda\nLas ideas de Hanslick, por J. Nin\nPerdonad, Señor.. Por Eduardo L. Chávarri\nSobre el Catálogo general, por Franscico Calés y Pina\nMovimiento musical en España y el Extranjero. Amsterdam, por V. I., Buenos Aires, por Bernardo Iriberri\nNoticias\nNecrológicagía, por I. Z.\nPublicaciones recibidas, por I. Z.\nNúmero 9 (Septiembre)\nLa música profana en el reinado de Carlos I, por Cecilio de Roda\nIdeas y Comentarior, por J. Nin\n¿Piano o Clave? Por J. H. Nin\nMovimiento musical en España y el Extranjero, Bilbao, por I.Z.\nNoticias\nMiscelánea\nPublicaciones recibidas, por I. Z\nNúmero 10 (Octubre)\nReflexiones sobre la Ópera española, por Ignacio Zubialde\nDecíamos ayer, por Eduardo L. Chávarri\nSobre la nueva obra de Strauss\nIdeas y Comentarios, por J. Sin\nInterpretación musical, por Guillermo Urine Holguin\nMovimiento musical en España y el Extranjero. Buenos Aires, por B. Iriberri\nNoticias\nNecrológicagía\nMiscelánea\nA este número acompaña por separado la terminación del trabajo de J. Sin ¿Piano o Clave?\nNúmero 11 (Noviembre)\nCecilio de Roda\nLa música profana en el reinado de Carlos I, por Cecilio de Roda\nSobre la Ópera española, por R. Arenal\nIdeas y Comentarios, por J. Sin\nCómo escribió Beethoven su Fidelio y la vida de esta ópera, E. L. Chávarri\nMovimiento musical en España y el Extranjero. Madrid, por Miguel Salvador. París, por Hemri Collet\nNoticias\nPublicaciones recibidas por I. Z.\nNúmero 12 (Diciembre)\nLa música profana en el reinado de Carlos I (Conclusión), por Cecilio de Roda\nSobre la Ópera española, por Joaquín Fesser\nMovimiento musical en España  el Extranjero. Bilbao, por N. De Tavira e I. Zubialde, Barcelona, por V. M. De Gibert; Madrid, por M. Salvador; Bruselas, por Withe; París, por Joaquín Turina",
+                    
+                    7: "Revista Musical\nAño IV. Bilbao, Enero 1912. Núm 1\nSumario\nSobre el Drama Lírico Nacional, por Julio Gómez\nIdeas y Comentarios, por Joaquín Ninfa (continuación=\nAcerca de un artículo, por F. Gascue\nRecuerdos de Beethoven\nNecrológicagia\nMOVIMIENTO MUSICAL EN ESPAÑA Y EL EXTRANJERO\nBilbao, por I. Z y N de T.- Barcelona, por V. M. De Gibert.- Madrid, por Miguel Salvador.- París, por Joaquín Turina\nNoticias\nPublicaciones recibidas\nSufre un nuevo aplazamiento la publicación de nuestro Catálogo. Las instancias que nos han sido hechas por los que no se enteraros a tiempo del proyecto y nuestro natural deseo de hacer una obra la más completa posible (pues nu hemos de pretender que lo sea en absoluto), nos han inducido a diferir su aparición por un mes más, a fin de realizar durante este tiempo gestiones directas cerca de los que no han respondido a nuestro llamamiento y tratar de vencer la inercia de los mismos interesados, que en esto, como en otros muchos casos, es el mayor obstáculo que se opone a nuestra tentativa.\nRogamos insistentemente, pues, a los compositores, que nos remitan nota de sus OBRAS DE CONCIERTO, especificando la casa editorial de las que se hallen editadas y clasificando toas ellas por el siguiente orden. Obras para orquesta (comprendidas los fragmentos de obras teatrales ejecutables en concierto). Obras de música e Cámara. Id. Para canto y piano y, por último, las de piano solo y otros instrumentos que no deban comprenderse entre las de Cámara.\nSobre el Drama Lírico Nacional\nTerminábamos nuestro artículo anterior diciendo que el género dramático es el que ha de hacer grande a la música española: en conferencia que recientemente ha leído en el Ateneo el ilustre maestro Bretón confirmaba esta idea nuestra implícitamente, pues tratando de la orientación que seguir deben nuestros músicos actuales, sólo se refirió a la música desde el punto de vista del teatro.\nQuisiera yo que los razonamientos que voy a exponer tuviesen un fin práctico, y para esto he de presentar los términos del problema con gran sinceridad, sin intentar atenuar lo que en ello resulte desagradable, pues creo que la verdad es el mejor camino para la constitucionalizan de algo que sea duradero, que más fácil es que llegue a ser rico quien trabaja, confesando su pobreza, que el que disimula su penuria por pudor y re-",
+                    
+                    8: "Huye el concurso de los demás para que no le descubran. No es buen camino, á mi entender, el que han seguido casi todos los que de este problema se han ocupado; siempre se ha pretendido que por injusticia de ministros ó empresarios, mezquinos en prestar apoyo al arte nacional, no se implantaba la ópera española y casi siempre, al querer resolver la difícil cuestión, se ha ido, como la medicina antigua, contra los síntomas y no contra la raíz y origen de la enfermedad; el optimismo de algunos, ó el creer que ello era conveniente, ha hecho decir que poseíamos una gloriosa tradición lírico dramática y esto no es verdad, en lo que á la música se refiere. La música en nuestro teatro clásico siempre tuvo una muy secundaria importancia, quizás por la misma excelencia de las obras puramente dramáticas, es decir; habladas, sin música.\nEfectivamente, el pueblo español posee la tradición dramática más portentosa del Universo, pues si Inglaterra puede oponernos el nombre colosal de Shakespeare, genio de tan excelsa estirpe que quizás sólo en Homero y Cervantes puede hallar copartícipes de su gloria, nosotros aventajamos de tal modo en cantidad al teatro inglés, que sólo Lope de Vega escribió más que todos los dramaturgos británicos del siglo de Isabel. No es necesario que ahora expongamos el amor del pueblo español por el teatro: es cosa sobradamente sabida; recordemos solamente que si el pueblo friego del siglo de Pericles supo dar vida a creaciones tan egregias del arte como las tragedias de Sófocles, el pueblo español del siglo XVII, que vivía en bastantes peores condiciones, oía con religiosidad las complicadas metafísicas concepciones, autos sacramentales, que en la plaza pública se representaban con general aplauso. Amaba nuestro público de la edad de oro a sus dramaturgos, se interesaba grandemente por las nuevas comedias que entregaban a su voracidad Lope, Tirso, Alarcón, Rojas, Moreto, Calderón; las rivalidades de los autores trascendían y se comentaban hasta por el más bajo populacho y el público se apasionaba por las obras que, ó, eran aplaudidas entusiásticamente ó estrepitosamente silbadas, pero que rara vez dejaban indiferente á la multitud.\nDespués vino la decadencia; los ingenios de primer orden son seguidos por imitadores que suelen reflejar, agrandándolos, los defectos nunca las bellezas; el público, a pesar de la diferencia grandísima en valor literario de las obras, continuaba presentando su apoyo al teatro, quizás con más entusiasmo que nunca; se traba de lucha entre los desmedrados continuadores de Lope y Calderon y los reformadores de nuestra escena que pretendieron introducir los procedimientos del teatro francés, que les parecía reflejo más fiel del clásico y se forman bandos en el pueblo que, con Moratín ó Comella por bandera riñen la eterna batalla entre clasicismo y romanticismo. Llegan a imponerse, aunque no del todo, pues de nuestra escena no desaparecieron nunca los dramáticos del siglo de oro, los reformadores y sucre un paréntesis nuestra genuina producción, aunque en él figure un autor tan estimable como Moratín.\nDespués del paréntesis del siglo XVIII y principios del XIX, se reanuda nuestra romántica tradición y algún tiempo después de que los críticos alemanes, capitaneados por ambos Schelegel tomaran a Calderón por norma y guía de la literatura dramática, en nuestra patria producen sus dramas, llenos de espiritualizándola español, el Duque de Rivas, Garcia Gutiérrez, Zorrilla, Hartzembuch. Este resurgir de nuestra gloriosa dramática se prolonga hasta nuestros días; de cuando en cuando surge una obra que muestra su castiza progenie y que el genio dramático de nuestra raza no ha muerto, porque no puede morir quien tanto caudal de vida ha atesorado.\nY veremos constantemente que la vida del teatro español se basa en el pueblo y no en la protección de los grandes, pues si alguna vez Felipe IV se mezcló con los poetas, fue más para cotejar a cómicas que para proteger artistas y más para satisfacer caprichos de libertino que anhelos de generoso amparado de la Literatura. La clase popular sustenta en el siglo XVI a la cuadrilla de míseros representantes bululú, gangarilla, garnacha o farándula, según era más o menos númerosa, que: están ocho días en un pueblo, duermen en una cama cuatro, comen olla de vaca y carnero y algunas noches a menudo muy bien aderezado. Tienen el vino por armes, la carne por onzas, el pan por libres y la hambre por arrobas, como dice Agustín de Rojas",
+                    
+                    9: "ASOCIACIÓN\nVAGNERIANA)\nDE MADRID\nBIBLIOTECA\n-3\nla clase popular y la media son hoy también las que con más entusiasmo aplauden las\nobras de Benavente ó los Quinteros en teatros que nada deben á la protección oficial.\nLa música en el teatro nacional se reduce en sus orígenes á canciones y bailes\nque servían de intermedio y nada tenían que ver con la comedia, que era la principal\nrepresentación; de los precedentes gloriosos que pueda tener en la edad de oro de\nnuestra literatura el teatro lírico y que se invocan solemnemente por los panegiristas\nde la ópera española, sabemos muy poco; ia música de las zarzuelas ú óperas de Lope,\nCalderón y Bances Cáudamo nos es totalmente desconocida, no faltando quien supone\nque era de imitación italiana, fundándose en la Gelidanza, de Puesneda, estrenada en\nVenecia en 1692, pero no es esta prueba de gran fuerza, pues este maestro vivió casi\nsiempre en ltalia.\nSin duda nuestros archivos reservan grandes materiales que un dia han de consti¬\ntuir una hermosa tradición en la cual fundar nuestro teatro lírico; hoy por hoy no po¬\ndemos construir sobre los cimientos que echasen nuestros compositores dramáticos\ndel sigio XVIl, pues ellos nos son casi completamente desconocidos. Cita Barbieri la\nSelva de amor, de Lope de Vega, para demostrar que la ópera se conocía en España\nantes de que la trajesen los italianos á principios del siglo XVIll; pero, que conociesen\nla ópera, ¿implica que tuvieran un drama lírico suyo propio con carácter nacional? ¿No\nestán indicando lo contrario las palabras del propio Lope en la dedicatoria de la citada\nobra? Dice en ella que esa égloga, que se representó cantada á sus majestades, era\ncosa nueva en Espana; describe después los ingeniosos artificios escénicos que hizo\npara ella Cosme Lotti, ingeniero florentino. ¿No indica esto claramente que esta obra\nfué compuesta á imitación de las que por entonces estaban en boga en ltalia?\nLiterariamente, las zarzuelas y comedias con música de nuestra edad de oro son un\ngénero Inferior, menos castizo, siendo sus asuntos casi siempre mitológicos y sirviendo,\nde precedente histórico de la pobre invención de la comedia de magia. Además, se da\nconstantemente el hecho de que las representaciones lírico-dramáticas de importancia,\nse celebran en el Palacio real, en grandes fiestas de natalicios, matrimonios, visitas y\notros acontecimientos principescos, mientras el pueblo continuaba gustando en los co¬\nrrales de la comedia y de la música verdaderamente nacional de entremeses, bailes y.\ncanciones.\nEn el sigio XVIll, simultáneamente con la mayor decadencia de nuestro teatro, flo¬\nrece un género nuevo: la tonadilla, que puede considerarse como un sainete Iírico de,\ncorta extensión; pero no tardó en decaer, por lo pedestre de su poesía y por haberse\ndado los compositores á seguir las formas italianas; fenómeno bien digno de notarsa,\npues ha de repetirse en el siglo siguiente, siendo causa también de la decadencia de\nnuestra zarruela.\nVemos, pues, que, antes del siglo XIX, nuestra tradición lírico-dramática es insegu¬\nra, existiendo sólo con vida propia y savia verdaderamente nacional los géneros popu¬\nlares: los bailes, jácaras, tonadillas y canciones regionales.\nAhora, veamos cómo se verifica la invasión en nuestra patria de la música italiana\ny, Io que es más vergonzoso, de la lengua italiana para las representaciones musicales.\nHemos visto ya cómo los espectáculos lírico-dramáticos eran en el gran periodo de\nflorecimiento de nuestra literatura de menor importancia artistica que los puramente\ndramáticos; además la música se interpretaba con una pobreza de medios verdadera¬\nmente mezquina: cinco violines y un contrabajo dice Moratín que formaban la orques¬\nta, que no siempre acompañaba los cantables, pues en contra de toda verosimilitud y\nrespeto á la ilusión escénica, salla muchas veces á acompañar un tañedor de vihuela y\nla orquesta sólo servía para acompañar los bailes, cuyos variados nombres se han con¬\nservado. Los teatros eran corrales á cielo abierto y las decoraciones unos telones de\nindiana; pocas veces, en las comedias que llamaban de teatro, ponían telones pintados,\nbastidores y bambalinas. El primer teatro, algo parecido á lo que hoy entendemos por\ntal, fué el de los Caños del Peral y allí actuó á principios del siglo XVIIl una compañía\nde italianos que hicieron óperas y comedias, llamando desde luego la atención del pú¬\nO Biblioteca Nacional de España",
+                    
+                    10: "blico la mayor lmportancia que daban á la música y el relativo lulo de la presentación\nescénica, decorado y vestuario. Poca importancia hubiera tenido este hecho aislado,\npero el año 1700 había muerto el último monarca de la casa de Austria y por sn testa¬\nmento, aceptado por Luis XIV, se entronizó en nuestra patria la casa de Borbón con\nFelipe de Anjou; la corte de este rey es francesa, sus dos mujeres son itallanas, ha¬\nbian pasado los tiempos de Carlos V y de Felipe Il en los cuales el castellano se ha¬\nblaba en las cortes de Inglaterra, Francia y Alemania, en que se extendía la lengua de\nCervantes por todo el mundo conocido; ahora, en la corte de Castilla, el rey hablaba\nel francés con los ministros ó los confesores que le mandaba su abuelo; la reina, que\ntenía corazón lombardo y espíritu fiorentino, el italiano, con el abate Alberoni, que\níba á ser dueño de los destinos de España, ó con los cantores é instrumentistas sus\ncompatriotas, que trajo para distraer las pertinaces melancolias de su marido. En los\núltimos años de su reinado vino el célebre cantor Carlos Broschi, Farinello, que conti¬\nnuó sirviendo en palacio á los sucesores de Felipe V é lsabel de Farnesio, Fernando Vl\ny doña Bárbara de Braganza.\nEra, según Riecoboni, Farinello el último y más joven de los músicos ltalianos de\ngran reputación: canta por el gusto de Fanstina; pero según la opinión de los inte¬\nllgentes, no sólo es muy superior á ella, sino que ha llegado al último grado de la\nperfección. El éxito de este cantante en la corte fué inmenso, convirtióse en persona\nde confianza de los reyes y fué el que dispuso las fastuosas representaciones de ópera\nltaliana. Dejemos la palabra á Moratín, que en el Discurso preliminar á sus comedias\ndices «A este hombre extraordinario se encargó la dirección del Teatro del Buen Reti¬\nro, para que se hicieran en él óperas italianas, igualmente que todo lo relativo á las\nserenatas que se cantaban por el verano en Aranjuez, los embarcos nocturnos en la\nescuadra del Tajo, las iluminaciones, fuegos de artificio y demás festejos durante la\njornada; en suma, todas las diversiones del Palacio se fiaron á su inteligencia y á su\nbuen gusto. Broschi supo desempeñar estos cargos, si no con economia, con admirable\nacierto.»\n«Trajo á Madrid los más excelentes profesores de música vocal é instrumental,\nmaquinistas y pintores de escena, y adornó las representaciones con magnificencia\nsuntuosa. Cuando se hacían algunos en el salón llamado de los Reinos, cubrían el piso\nexquisitas alfombras, las paredes colgaduras de tisú de oro, espejos, tallas y pinturas,\nentre las cuales se colocaban estatuas; la iluminación correspondia á todo lo demás;\nlos músicos de la orquesta tenían uniformes de grana con galón de plata. En una ópera\ncantada en el Teatro se presentó una decoración toda de cristal; en otra ocasión se\níluminó la sala del concurso con doscientas arañas; en la ópera de Armida placata se\nvió un sitio delicioso con ocho fuentes de agua natural, y una entre ellas con un surti¬\ndor que subia á sesenta piés de altura, sonando entre los árboles el canto de una mul¬\ntitud de pájaros, imitado con la mayor inteligencia. La riqueza de los trajes, muebles y\nuiensillos de teatro, las comparsas (que á veces se componian de cincuenta mujeres y\ndoscientos hombres), la vista de los ejércitos con numerosa caballerla, elefantes, ca¬\nrros, máquinas de guerra, armas, insignias, música militar, los fuegos artificiales que\nse veían al acabarse el espectáculo más allá de la escena (cerrándose la boca del Tea¬\ntro, para que el humo no ofendiese, con dos correderas compuestas de los mayores\ncristales de la fábrica de San lldefonso), todo era digno de un gran monarca que disi¬\npaba en esta diversión la opulencia de sus tesoros.»\n«Los poetas que escribieron las óperas, serenatas é intermadios desde el año l747\nhasta el de I758, fueron: el abate Pico de la Mirandola, Pedro Metastasio, Migliavac¬\nca, José Bonechi y Pablo Rolli. Las piezas que se cantaron en el Retiro y en Aranjuez\nfueron éstas. Operas: Lo Clemenzo di Tito, Angelica e Medoro, Il vellocino d'oro,\nPolifemo e Galalea, Artaserse, Armida placala, Demofoonte, Demetrio, Didone\nabbandonata, Siroe, Nileti, Il Re pastore, Adriano in Siria. Serenatas: L'asilo\nd'amore, La festa chinese, La Nascita di Giove, L'isola disabilata, Le Mode, La\nNinfa smarrita, Intermedios: Il cavalier Bertoldo, La Burla da vero, La Stalua, Il\nO Biblioteca Nacional de España",
+                    
+                    11: "-5-\nGinocatore, L'Uccellatrice, Il Cuoco, Don Trastullo, Il Conte Tullpano.»\n«Por esta rápida enumeración se echará de ver que aquellos brillantes espectácu¬\nlos, dirigidos por un italiano y representados por italianos, poco ó ningún influjo pu¬\ndieron tener en el adelantamiento de los teatros españoles. Entre los músicos de la or¬\nquesta, sólo don Luis Mizón y otros dos ó tres instrumentos no eran extranjeros; entre\nlos que cantaron sólo hubo una actriz española; los artífices empleados en la pintura\nde las decoraciones, en la invención y dirección de las mápuinas, vinieron de ltalia\ntambién. Se mandó que todas las piezas se imprimieran traducidas en castellano pars\ndistribuírlas á los concurrentee en la primera noche de su ejecución. Se abrió el teatro\ncon la opera de La Clemenza di Tito; encargóse á don lgnacio de Luzán la traducción\nde ella y la hizo, aunque en muy pocas horas, con el acierto que era de esperar; las\nque se imprimieron después las tradujo un médico italiano llamado don Orlando Bone¬\nnore, que ni se avergonzó de suceder á Luzán en aquel encargo, ni tuvo escrúpulo de\nhacerse escritor en una lengua que no sabía. Sus traducciones pueden considerarse\ncomo otros tantos modelos de extravagancia y ridiculez.»\nMientras en Palacio se representaban con la pompa que nos describe Moratín las\nóperas italianas en italiano, en los teatros populares continuaban ejecutándose las com¬\nposiciones nacionales por los consabidos cuatro violines y contrabajo y acompañándo¬\nse el canto por el guitarrista. El divorcio se habla verificado entre las clases aristo¬\ncráticas, que gustaban extraordinariamente del arte italiano y las populares que se apa¬\nsionaban todavía con los dramas nacionales. Entonces pudo nacer la ópera española,\nsi se hubiesen cantado las italianas en italiano, pero ¿cómo hacerlo si los reyes quizás\nno entendían aún bien la lengua del país que gobernaban?\nEn las corrientes de transmisión de formas, procedimientos ó géneros artlsticos de\nuna nación que los posee á otra en la cual aún no se han desarrollado, siempre hay algo\nde beneficioso, en el caso de que lo extranjero sea asimilado y transformado por los\ngenios nacionales, según la manera de ser del propio paí́s. ¿Qué resultó al cabo, sino\nuna gran riqueza en nuestra poesía, del entronizamiento en el siglo XVI, de las formas\nltalianas, cuando se las apropió un genio de la talla de Garcilaso? Si al llegar á Espa¬\nña la ópera italiana nuestro teatro no se hubiese hallado en aquella postración, si no\nhublese sido Palacio el albergador del arte italiano, sino los teatros populares, con las\nobras traducidas al castellano, un fenómeno análogo se hubiera verificado. No sucedió\nasí y todavía sufrimos las consecuencias.\nNo tratamos ahora de hacer una história de las vicisitudes de nuestro teatro lírico\ny por eso no seguiremos paso á paso la marcha del arte italiano y del nacional; es\nsuficiente recordar que del Palacio Real salieron los cantantes italianos á las tablas de\nlos teatros y el público se apasionó tanto por el nuevo espectáculo, que florecieron las\ncompañías extranjeras á expensas de los representantes nacionales y que mientras que\nel drama nacional languidecia en el desamparo de gobernantes y público, los cantantes\nde ltalia causaban fanatismo y, como dice algún autor de la época, se les esperaba con\nansiedad y se les recibía con más agasajos que si se tratase de triunfadores capitanes,\nJULIO GOMEZ.\n(Se concluirá)\nLa falta de espacio nos obliga á dejar para el próximo número un ar,\nticulo que nos remite el senor Nin sobre la tan debatida cuestión del plano\ny el clave.\nO Biblioteca Nacional de España",
+                    
+                    12: "-6-\nIDEAS Y COMENTARIOS\nPor JOAQUÍN NIN\n(CONTINUACION)\nEl Genio y la Multitud\nde los sabios.\nLa multitud ha sido siempre enemiga\nCHARLES DA SAMT-ÉVREMONT.\nNos cuenta Cicerón que Antímaco, el gran poeta y gramático griego, lela un dia\nuna de sus obras maestras (se cree que fuera la Tebaida) delante de un público nume¬\nroso, pero tan poco digno, tan poco atento que, no encontrando la obra de su gusto,\ncomenzó á eclipsarse lentamente. Reparó Antimaco en que el solo oyente que le que¬\ndaba era Platón, y, conocedor del valor de sus juicios, continnó impertérrito la comen¬\nzada lectura.\nAlgunos años antes decía Antifontes de Ramno, célebre retórico ateniense; «Cuan¬\ndo se tiene un alma grande, se prefiere el parecer de un hombre de mérito al de la\nmultitud.» (Aristóteles, Moral á Eudemo, III, 5, 6.)\nEn efecto; los grandes ingenios, las almas abiertas á lo sublime, han manifestado\nsiempre una marcada indiferencia, un desdén que toda su vida proclama abiertamen¬\nte, por la admiración de la Multitud.\nPalestrina, Monteverde, Victoria, Bach y Beethoven no pensaron ciertamente en el\ngusto de la Multitud al forjar las maravillas que hoy admiramos, no pensaron más que\nen sí mismos, en su misión para con la Humanidad y en la inconmesurable Belleza por\nla que se sentían penetrados. Wagner, Schumann, Moussorgsly y Franck han obrado,\ndeliberada ó inconscientemente, contra todo lo que la Multitud esperaba y exigía de\nellos. Tenian conciencia plena del daño que esto pudiera causarles, pero nada hubiera\nsido capaz de separarles del camino que se habian trazado para cumplir su misión, pa¬\nra alcanzar lo Infinito, lo Bello, lo Eterno.\nTodos admiramos hoy el ejemplo que la Escuela Francesa nos ofrece; no siente el\ntemor de aristocratizarse, de recogerse y de escalar las cimas que sólo el buen gusto\ny el ingenio hacen accesibles. Recibe allí los aquilones de la crítica, pero vive dichosa\nsu ensueño de elegancia, de claridad, de delicadeza, mientras que en el llano la Multi¬\ntud murmura su bestial y sombría canción de toda la vida...\nLa gran Belleza y la Grandeza verdadera no serán nunca accesibles á la Multí́tud;\ndíré más: hay que preservar contra la muititud á esta grandeza y á esta belleza. No\nhay que sacrificarlas ni exponerlas á una insensata profanación; es preciso que perma¬\nnezcan á igual distancia de las masas que las imágenes de los creyentes.\nQue la multitud experimente el encanto y el poderio del gran Arte; que sepa, por\nnuestra mediación, todo lo que hay en él de digno, de puro, de noble; pero evitemos,\ná todo precio, el contacto entre ella y las Obras maestras, imágenes del Genio..,\nEl verdadero puesto de los Intérpretes de Arte, de los Évocadores, de los Iniciado¬\nres, es el de intermediarios entre el Arte y la Multitud, no sólo para hacerlo amar, sino,\ny principalmente, para defenderlo; porque la Multitud ama, á veces, pero mal, casi\ná la manera de las bestias... Sus desbordamientos, de alegria ó de furor, llevan siem¬\npre el sello de la demencia: derriba hoy lo que adoraba ayer; aclamará mañana lo que\ninjurió, vilipendió y ridiculizó en el pasado. El Genio será siempre para la Multitud un\nalgo misterioso é incomprensible; por eso lo profana, á veces, creyendo honrarlo...\nAcaso fuera meior renunciar á ella y dejarla que se sacie de lo que su instinto le\nhace preferir... pero quien dice Multitad dice Hamanidad, y la Humanidad es el Hom¬\nbre. Sea la que fuere la altura á que el Arte nos permita elevarnos, el Artista, el Ar¬\ntista-Intérprete, sobre todo, no sobrepasa la de un hombre; hay, pues, que afrontar la\nMultitud, pero alta la frente y con la convicción inquebrantable de protejer ardiente¬\nO Biblioteca Nacional de España",
+                    
+                    13: "-7-\nmente lo que, para nosotros, es la Alegria y la Vida; pero sin olvidar que la Multitud\nes á menudo para el Genio un tirano cruel...\nLa razón del más fuerte\nLa razón del más fuerte es siempre la mejor.\nLA FONTAINE.\nLa concupisdencia y la fuerza son el origen de\ntodas las acciones humanas. La concupiscencia\nhace los voluntarios; la fuerza los involuntarios.\nPASCAL.\nLa reedición de las antiguas obras maestras sufre la misma suerte que el viejo An¬\ntifonario; suerte nefasta, como ninguna, porque toda orden religiosa recien fundada\ntuvo á bien ejercitar su poder reformador introduciendo alguna modificación en este\nvenerable monumento.\nCada nueva escuela trae consigo una nube de pedagogos y eruditos que se creen\ntodos en el caso de reeditar obras antiguas y clásicas. Cada reeditor aporta á esta mi-\nsión-que no me atrevería á llamar piadosa-el fruto de sus laboriosas meditaciones,\ny cree poseer-como los chantres ltalianos y franceses del tiempo de Carlomagno-«la\nverdadera ciencia del canto...;» y sin embargo, el desmoronamiento de los antiguos mo¬\nnumentos continúa sin tregua, ante los distraídos ojos de una multitud de eruditos que\nhan convertido en piqueta la antorcha salvadora.\nPorque, á fin de cuentas, estas nuevas ediciones-aparte excepciones meritísimas-\nno contienen nada que justifique su existencia...; nada más que la «razón social», (la\npalabra social es aquí un delicioso eufemismo), la etiqueta comercial que las cubre...\nUn ejemplo: Túrk, Westphal y Hugo Riemann, en Alemania; Mathis Lussy y J. Com¬\nbarieu, en Francia, han tratado de coordinar y generalizar los principios de la racional\ninterpretación rítmica. Se creia que esto fuera la muerte del empirismo ciego é incons¬\nciente y el comienzo del reino de la razón en la interpretación musical. Y sin embargo,\nninguno de nuestros modernos reeditores parece haberse dado por enterado, ni menos\nlos virtuosos, por lo que el fraseo musical continúa vejetando bajo el régimen tirámico\nde la barra divisoria del compás, ó bajo la sospechosa égida de la «inspiración» y de la\n«intuición»...\nOtro ejemplo; nos reveló Moszkowski, hace buen número de años, digitaciones de\nuna maravillosa lóglca (hablo ahora para los panistas) y de una siempre fácil y cómoda\naplicación. Los reeditores lo ignoran, ó, lo que es peor, aparentan ignorarlo, pues las\nmás recientes ediciones de Bach, de Mozart, de Haydn y de Beetoven son, á este res¬\npecto, de una imperfección y de una insuficiencia que no pueden describirse. Esto es\nabsurdo é increíble, pues ya nadie pone hoy en duda la importancia de este «medio» en\nla interpretación al piano.\nX..., en fin, publica una sonata de Veracini cuyas dos primeras partes han sido to¬\nmadas de una obra y la tercera de otra composición del mismo autor. Z... publica cier-\nta conocida pieza de clerto autor antiguo, con un título apócrifo, y consigue así colo¬\ncar un considerable número de ejemplares de una obra que todo el mundo posee ó co¬\nnoce... Cierto célebre virtuoso presta su nombre á cierta edición monumental...; su\nnombre y nada más, puesto que, sin duda, no está en condiciones de hacer otra cosa, á\npesar del título de erudito con que se adorna. Y asi sucesivamente...\nPor ota parte, los musicólogos, estos seres «tan inútlles» al decir de algunos vir¬\ntuosos, han descubierto las fuentes de nuestra literatura, nos han dicho cómo se re¬\nmonta hasta allí y la manera de saciar en ellas nuestra sed... ¡Tiempo perdidol\nLa mayoría de nuestras ediciones modernas nos aleja cada vez más de estas fuentes\npara sustitulrlas por otras menos puras, menos saludables, pero, es de creer, más fáci¬\nles de captar y de más considerable rendimiento. Y estos modernos revisores acortan,\nalargan, modifican, y transforman casi hasta el crimen... Pululan los ejemplos,\nO Biblioteca Nacional de España",
+                    
+                    14: "¿Por qué todas estas reediciones? ¿Para qué sirven, como no sea para propagar el\nerror y enterrar más profundamente á la verdad? ¿No seria más sencillo reproducir so¬\nlamente las ediciones originales, tales como se hallan en las biblotecas públicas ó en\nlas colecciones privadas? ¿Por qué hemos de tener más de una veintena de versiones\nde la Fantasía Cromática y Fuga de Bach, por ejemplo? Cuestión de cantidad, en\nsuma, sobre la que es ocioso insistir, y cuyas raíces tal vez alcancen hasta el Antifo¬\nnario de San Gregorio, que en todo tiempo el cálculo y la razón de la fuerza han ven¬\ncido al sentimiento.\nAlguien ha dicho que las virtudes se pierden en el interés, como los rios en el mar.\nEste alguien conocía, probablemente, á ciertos editores modernos de música antigua...\nACERCA DE UN ARTICULO\nLa conocida revista musical francesa SI M (Societé internationale de musique) ha\npublicado en su entrega del corriente mes un articulo interesante de A. Lizes, titulado\n«Etapes d'une découvertes». Su lectura me sugiere dos observaciones, que expongo\nvalgan por lo que valgan y sin la menor pretensión de estar en lo cierto.\nEl descubrimiento objeto del artículo, es el de los armónicos más graves que el tono\nfundamental de una nota.\nDespués de disertar sobre las gamas harmónicas, de Pitágoras, templada (tempérée)\ny lo que llama gama comática de la música moderna, habla de los harmónicos graves,\nasunto que ha sido objeto de sus estudios y observaciones y que se propone desarroliar\nen un segundo artículo.\nEnuncia su opinión en los términos siguientes: «Nada ha demostrado hasta hoy la\ncausa de la intensidad del llamado sonido fundamental y de su constitución harmónica;\nes decir, en qué condiciones se podría afirmar con certeza que es el sonido generador\nde sus manifestaciones acústicas El estudio profundo de las manifestaciones vibratorias\nde un conjunto de cuerpos sonoros nos ha demostrado (con la sola audición de esas\nmanifestaciones y aplicándoles el método harmónlco musical) que el sonido llamado hasta\naquí fundamental es únicamente el harmónico más intenso de un conjunto muy extendido\nde harmónicos, más graves y más agudos que él. Por consiguiente, no es más que el so¬\nnido predominante de un conjunto de manifestaciones vibratorias, y la escala superior de\nestas vibraciones, es una escala parcial, más ó menos incompleta». «El verdadero\nsonido fundamental, ó sonido número l de la escala generail, vibra en los graves, en\nun intervalo demasiado alejado, para poder ser oído».\nNo es mi propósito examinar el asunto, para lo cual carezco de conocimientos físicos\ny musicales, pero siempre guiado exclusivamente por mi oído, creí en la existencia de\nlos harmónicos graves, objeto del estudio de Lizes, y es más, me parece percibirlos\ncomo sonido de cierta relativa intensidad en algunas ocasiones.\nCantan dos tenores una misma melodía, en el mismo tono y diapasón; el uno es\ntenor de fuerza ó dramático (helden tenor) y el otro es tenor lírico ó ligero. Pues bien,\nel efecto que la comparación de ambas voces produce, es que el tenor dramático, de\nvoz fuerte é intensa, canta la melodía en texitura más baja que el lírico. La observación\nme parece innegable, pero lo para mí dudoso, es la razón física del efecto mencionado.\nHe opinado y opino, que los sonidos del tenor dramático, tensan muchos, y relativa¬\nmente intensos, harmónicos graves, mientras el tenor ligero carecia de ellos.\nCierto es que la experiencia de nuestro conocimiento sensible nos hace considerar\nlo que es alto, ó agudo como algo más ligero, menos denso, menos material si cabe\ndecirlo, y en cambio se nos presenta constantemente lo bajo, como más voluminoso, de\ncolores más acentuados, más intensos, de tal modo que por analogía intuitiva, una voz\nrobusta nos puede hacer el efecto de cantar en tono más grave, aunque no haya tal cosa.\nPosible es que en ello estribe el diferente efecto de las dos voces en cuestión, pero no\n-8-\nO Biblioteca Nacional de Españá",
+                    
+                    15: "me parece probable. Me ha parecido siempre oir, fijándome con atención sostenida en\nel canto de los tenores de fuerza, los harmónicos graves, sin que me sea posible preci¬\nsar cuáles son en la gama musical, esos armónicos. ¿Será mera ilusión mia?\nEl punto estará seguramente analizado y completamente dilucidado, pero yo, en mi\nignorancia, desconozco las causas del efecto que apunto, ó recuerdo. Mucho agradece¬\nria que algún profesor de música me instruyese acerca del particular; uno de los fines\nde la REVISTA MUSICAL es, precisamente, el de esparcir los conocimientos musicales\nútiles ó agradables entre sus lectores.\nEl señor Lizes inserta en su excelente artículo parte de una carta escrita por él á\nSaint Saëns. Hé aqui el fragmento de la misma, que me sugiere otra pequeña obser¬\nvación.\n«Cuando después de un acorde final (en la Magdalena de París) sea del órgano\ngrande, ó sea del coro, escuchaba yo el sonido que persiste en el recinto demasiado\nsonoro, siempre ese sonido subía de un modo apreciable en el momento de extinguirse.\nTengo en mi cuarto un reloj cuyo timbre hace oir vibraciones secundarias (la funda¬\nmental sin duda alguna) á razón de 5 por segundo; en el silencio de la noche, que per¬\nmite distinguir durante mayor tiempo la prolongación del sonido, aquellas vibraciones\nse aceleran antes de apagarse.»\nLas observaciones de Lizes las han hecho, seguramente, mil veces, todas las per¬\nsonas de aficiones musicales y de oído suficientemente fino.\nLo mismo lo he notado al irse apagando el sonido de algunas campanas y cuando el\npianista, después de dar con fuerza una nota, levanta la mano del teclado y deja que el\nsonido se vaya apagando por sí solo. Al final he notado, no constantemente, pero sí con\nfrecuencia, una elevación claramente apreciable de la nota.\nEl autor dice lo siguiente;\n«En el estudio experimental de que hablaré más tarde (en el segundo artículo su¬\npongo) creí encontrar la explicación del fenómeno, pero haciendo nuevas experiencias\nme he convencido de que provenía de otra causa».\nEsperemos al segundo artículo para ver cuál es esa causa. Yo que no tengo compe¬\ntencia musical para hablar del asunto y que á la vez carezco de conocimientos fisico¬\nmatemáticos, me limito á recordar el simil ó ejemplo de comparación que en los cursos\nelementales de fisica se presenta á los alumnos, cuando se desea darles idea de las\nvibraciones del aire ó del éter; es decir, de las vibraciones invisibles. ¿Quién no lo\nsabe? Es el ejemplo de una piedra arrojada al agua. Alrededor del punto de choque se\nforman ondulaciones concéntricas; las próximas al sitio en que cayó la piedra tienen\ncierta altura y guardan entre si determinada distancia, pero á medida que se alejan del\ncentro la altura ó intensidad va decreciendo y en cambio se acercan más unas á otras.\nLa energia del choque se traduce principalmente por intensidad al principio, pero\ncuando se va disipando dicha energia en la inercia de la masa de agua, la intensidad\ndecrece y la energía que aún actúa, se presenta más bien en forma de frecuencia\nondulatoria.\nPues bien, si nuestro oido estuviese en condiciones de percibir las vibraciones foné¬\nticas que sin género de duda, produce el movimiento ondulatorio del agua y que ésta\nnos transmite por medio del aire, oiriamos un sonido, ó conjunto harmónico de sonidos,\ncuya resultante sería cada vez menos intensa y cada vez más aguda. A las ondas altas\ny espaciadas corresponderían sonidos graves fuertes, y á las ondas de poca altura y\nfrecuentes, sonidos más agudos.\nEs, quizas, no me atrevo á afirmarlo, ley de todo lo que se extingue lentamente y\nsin que esfuerzo alguno especial venga á contrariarlo. Nuestro imperfecto aparato du¬\nditivo nos impide percibir los últimos sonidos en la inmensa mayoría de los casos.\nTienen la palabra las personas competentes.\nF. GÁSCUE.\n28 Enero 1912.\n- 9-\nO Biblioteca Nacional de España",
+                    
+                    16: "- Yo-\nRECUERDOS DE BEETHOVEN\nAlgunos críticos han suscitado recientemente la exactitud de los datos referentes á\nla impresión que hizo el estreno de la IXª Sinfonía y si Beethoven pudo ó no escu¬\ncharla.\nCon este motivo se recuerda que es terminante la declaración de un testigo presente.\ncial publicado en Allgemeine Musikzeitung en 1907.\nEn esta fecha contaba Mme. Grebner 92 años, su memoria era felicisima, y recor¬\nDaba que fue cantora en los coros de la Novena cuando fue estrenada.\nLa señora Grebner tenía entonces 16 años y recuerda perfectamente la impresión.\ntrájica que Beethoven produjo en sus intérpretes. Habíase sentado el día del estreno\nen medio de los ejecutantes, de espaldas al público, y trataba de oir algún sonido; pa¬\nsaba las hojas de su partitura como si fuera siguiendo la ejecución... pero se notó bien\npronto que no las regresaron apropiadamente. Cuando al final hubo terminado, aún seguía\nvolviendo hojas.\nEntonces, alguien le tocó en el hombro (l) y al volverse Beethoven vio las manos.\nque aplaudian, los pañuelos que saludaban y se inclinaban.\nEl efecto de esta primera ejecución fue inmenso: los «bravos» surgían en medio de\nlos diferentes fragmentos; la introducción de los timbales en el scherzo se demostró\ncomo un rasgo de genio y provocó un entusiasta aplauso.\nUn día que la señorita Grebner se paseaba con unas amigas por el Graben, una de\nellas exclamaron: «Mirad á Beethoven». Todas se detuvieron para verle pasar, contemplando\nplándole con respeto, y él á su vez, también se paró á mirarlas con sus lentes y siguió\nluego su camino.\nEra muy raro verle por la calle. En cambio á Schubert se le veía frecuentemente\npaseando por las fortificaciones, por los jardines, ó en los teatros, su buena cara de\nvienés jovial.\nUn día en que recientemente la señora Grebner felicitó á Weintgarner por un eje¬\nCución de la V.ª Sinfonía y éste replicara modesto:\n-Las sintonías de Beethoven son el Evangelio de los músicos.\nHubo de decirle a la referida señora:\n-Quien hubiera dicho eso en tiempo de Beethoven hubiera pasado por loco.\nPor último, la señora Grebner pronuncia el nombre de Beethoven acentuando la ó,\nsegún la costumbre vienesa. Los alemanes suelen pronunciarlo aceutuando la primera.\nsílaba.\nNecrología\nHa muerto recientemente en Madrid, un compositor bilbaino que tuvo su hora de ce¬\nlebridad local y decierto prestigio en los círculos musicales españoles. Cleto Zabala\nfué discipulo de don Nicolás Ledesma y pronto se distinguió de entre el grupo de jóvenes\nnes que acudía de todo el país vascongado á recibir los consejos de aquel insigne maes¬\ntro. La composición de una ópera española en un acto, «La hija del pescador», le valió\nuna pensión de la Diputación de Vizcaya, con lo que pudo perfeccionar sus conocimientos\ntos en el extranjero y visitando los principales centros musicales de Alemania, Francia,\nBélgica e Italia.\n(1) Fue la soprano Carolina Unger.\nBiblioteca Nacional de España",
+                    
+                    17: "De vuelta á Bilbao, después de algunas campañas en diversas poblaciones españolas\ncomo directer de compañías de ópera, contribuyó á la formación de la Sociedad Coral,\nde la que fué el primer director y á la que guió en muchos concursos orfeónicos en que\nsalió victoriosa. Trasladada su residencia á Madrid dirigió alli algunos teatros de zar¬\nzuela, en cuyo género se ensayó diversas veces, y ha muerto olvidado de todos, des¬\npués de una vida harto azarosa.\nZavala era un compositor que conocía muy bien el mecanismo de su arte y no care¬\ncia de invención, manifestando abierta tendencia hacia la pompa meyerbeeriana que\nestaba en voga en la época de su mayor actividad artística. Deja escrita, además de la\ncitada, uua ópera, «Marcia», premiada no hace aún muchos años en un concurso de la\nAcademia de San Fernando, una misa á grande orquesta, una marcha de carácter triun¬\nfal, dedicada á la Diputación vizcaina, á su vuelta de los años de pensión, diversas zar¬\nzuelas y no pocos coros orfeónicos, siendo el que le dió mayor prestigio el titulado «La\ncaza del corsaríos, que alcanzó el premio destinado á elegir la obra que habia de ser\nlmpuesta en uno de los concursos de Orfeones celebrado en Bilbao.\nDescanse en paz el infortunado artista.\nMovimiento musical en España y el Extranjero\n--\nBILRAO\nEs tina singular proeza la que realizan estos artistas que acuden desde las más\nopuestas latitudes á reunirse en un punto dado y se ponen, sobre la marcha, á to¬\ncar una sonata, logrando dar á su improvisación cierto semblante de cosa madura. Co¬\nsa es esta que admira, y á la vez entretiene, pues es curioso observar las luchas que,\nen el fondo de estas ejecuciones, laten á veces entre dos criterios divergentes que se\nesfuerzan en marchar paralelos. Así, por ejemplo, en el primer tiempo de la sonata en\nsí bemol de Mozart, que ejecutaron en nuestra Filarmónica el 22 de diciembre el pia¬\nnista Cortot y el violinista Farnández Bordas, se notaba que, mientras el violín parecía\nsentir reposadamente aquella música, el piano la comprendia más fugitiva, por lo que\ncada uno, al apoderarse del tema y ser el dueño de la situación, tomaba el tiempo de\nsu preferencia.\n¿A quién seguir en este tira y afloja? Por mi parte daría la razón al violín, pues no\npuedo soportar esta mania en que han dado los grandes pianistas de ejecutar Mo¬\nzart á paso de carga, bajo pretexto de que sus fáciles trazos de mnecanismo no fuerzan\nla admiración de las masas más que acelerándolos. Esto me parece abominable y en¬\ncuentro no se qué de cobardía, aigo así como el acto de maltratar á nn niño, en esta\nviolencia hecha al candoroso genio de Salzburgo. Por fortuna, Cortot es un artista de¬\nmasiado fino y concienzudo para hacer otra cosa más que iniciar esta tendencia, como\nnos lo probó al acentuar deliciosamente, sin precipitaciones, el ritmo ondulante y gra¬\ncioso del rondó final. Por otra parte, ¡de qué conmovedora manera cantó la celeste me¬\nlodia del Andantinol\nSu compañero estuvo también sumamente afortunado, fundiéndose ambos muy sa¬\ntisfactoriamente en la Sonata en do menor de Beethoven, que formaba la tercera par¬\nte del concierto.\nLa segunda estuvo dedicada á los solos, haciéndonos oir Cortot una transcripción\nsuya de un concierto para órgano de Friedmann Bach, transcripción á su vez de un\nConcierto para violín de Vivaldi: la obra conserva gran vitalidad á pesar de la fecha\nde su nacimiento y las vicisitudes de tanta transcripción. Después nos tocó Chopin, in¬\n- I1-\nO Biblioteca Nacional de España",
+                    
+                    18: "- 12-\nterpretándolo con elegante abandono, á flor de teclado, dando cierta impresión de\nhastio, que por acordarse muy bien con la nuestra propia nos pareció de perlas. Pero\nentonces, ¿por qué tocar Chopin? ¿Por qué no dejair reposar siquiera una veintena de\naños á igual ó menor número de obras de este autor con que nos muelen los oidos ine¬\nvitáblemente todos los pianistas?\nBordas tocó con sentimiento justo y adecuado estilo tres piezas de música antigua\nen transcripciones de Rreisler, sin cuyo marchamo no pueden, á lo que parece, llegar\nhasta nosotros las composiciones violinisticas de los pasados siglos. ¿No sería más ló¬\ngico servirse de las versiones auténticas, ya que sobre las del célebre violinista pesan\nlas más duras acusaciones de mixtificación?\nOtros dos conciertos tuvimos el 7 y 8 de enero, cuyo peso recayó en el violoncellista\nVan lsterdaél y el pianista Levy, aliviados en su tarea por la cantante Agnés Borgo.\nComo obras de combinación de los dos instrumentos figuraban aigunas sonatas italia¬\nnas (Marcelo y Bocherini) la monumental en la de Beethoven, y una de las de Mendels¬\nsohn que mejor justifican el ostracismo que padece este compositor; á más de unas varia¬\nciones del mismo y otras de Beethoven-indignas de él-sobre un tema de Mozart. El\nvioloncellista tocó también una variada colección de piezas de diversos autores, como\nHáendel, Geminiani, Saint-Saéns, Fauré, etc.; el pianista algunas de las admirables\nelberias» de Albéniz, la «Leyenda de San Francisco andando sobre las ondas», de\nLiszt, con otras obras de menos fuste, y la cantante nos dió los cinco poemas de Wag¬\nner, el «Rey de los Alisos» de Schubert y diversas melodías de Gounod, Massenet,\nGeorges y Grieg. En suma, tin programa-mosaico, como sucede siempre que inter¬\nvienen elementos heterogéneos.\nLa señorita Borgo es dueña de una voz teatral, grande y de no mal timbre, pero\nmás propia, por lo mismo, para las expansiones dramáticas que para las intimidades de\nlied. Por eso no brilló en las melodías de los compositores franceses (y esto no es lla¬\nmar lieder á las frivolidades massenéticas) y alcanzó su apogeo en la sublime balada de\nGothe y Schubert, cantada en la lengua originaria, produciendo una emoción in¬\ntensa al detallar con sobriedad, pero con relieve, la intervención de los tres personajes.\nEl violoncellista lsterdaél mostró en todas ocasiones la facilidad y solidez de su me¬\ncanismo, facilidad que le lleva á momentáneas precipitaciones de tiempo, pero es la¬\nmentable que, en cuanto á la interpretación, use de recursos tan poco legítimos como\nel portamento constante. El talento innegable de este artista no ha de negarle medios\nexpresivos de más elevada condición, permitiéndole abandonar los presentes, sólo ex¬\nplicables quizá por la equivocada idea que tienen los hombres del norte de la cultura de\nlos públicos meridionales.\nY, en fin, oí́mos con gusto el juego seguro, pero incoloro, del pianista Levy que, si\nno pudo, como es natural, presentar en su gracia nativa las piezas de Albéniz, mostró\nuna real pujanza en la leyenda de Lisat.\nI. ZUBIALDE.\n844\nComo todos los años por esta época, volvemos á reunirnos delante de esa curiosa\nfalange de artistas de ambos sexos, bastantes de ellos que sentados no llegan con los\npiés al suelo ni pueden empuñar más que un cuarto de violin, pero todos entusiastas y\nsatisfechos al salir una noche de la soledad de las ciases á la presencia de un público\nconvencido, á su frente Lope Alaña, director abnegadisimo é inteligente de la Acade¬\nmia. Conjunto al fin de alumnos, y de distintos cursos y distintas capacidades, sería\ncontra toda justicia criticarlo como una orquesta ya forinada, y no como una promesa\nó esperanza. Y á este respecto, el juicio no puede ser más halagüeño: dentro de no mu¬\ncho tiempo, tendremos cuerda buena y nutrida, y con tal base, la orquesta verdad, tan\nsuspirada y tan necesaria para el completo desarrollo de la vida musical en esta viila.\nEl concierto fué muy variado y ameno. Tocó la orquesta como piezas de conjunto\nun tiempo de un Quinteto de Mozart, el Preludio de El Diluvio de Saint-Saens, un Co¬\nO Biblioteca Nacional de España",
+                    
+                    19: "- I5-\nralvariado de Bach y la Overtura de Los esclavos felices de Arriaga, que, con no ser\nla mejor, ni mucho menos, de sus obras, ofrecia cierto interés como primicia de su ma¬\nlogrado autor y como uno de los pocos números que se conservan de la ópera de ese ti¬\ntulo que escribió él á los catorce años y estrenó en el teatro que por entonces podia\nhaber en Bilbao. Es una Overtura de corte y sabor rossinianos, aunque su primer tiem\npo ya presagia al Arriaga de los Cuartetos.\nEl resto del concierto puede decirse que fué consagrado á Guridi como autor, diree¬\ntor y ejecutante. Bajo su dirección cantó el coro infantil de la Academia las deliciosas\nescenas Asi cantan los chicos... más gustadas cuanto más oídas, verdadero modelo ent\nsu género. Acompañó al piano á Sixto Osorio su Romanza para violín, que sin llegar\npara nuestro gusto á la Elegia, revela siempre la distinción y maestria de factura del\njoven compositor. Estrenó tres piezas para piano, cortas, delicadas, originalee, que sin\nduda no tardarán en publicarse en lindísima colección de piezas liricas. Finalmente\nejecutó la parte de órgano del Coral variado de Bach.\nPara él naturalmente fueron los mayores aplausos de la noche. Y con él los compar¬\ntieron merecidisimamente el citado señor Alaña; el señor Arisqueta como perfecto pia¬\nnista en la Romanza del Concierto en Re Menor de Mozart y en el acompañamiento do\nlos coros de Guridi; y los alumnos Sixto Osorio en la Romanza de violín y Estefania\nen el solo del Preludio de El Diluvio.\nN. DE T.\nBARCELONA\n¡Día de mucho, vispera de pocol Después de los magnos conciertos del mes ante¬\nrior, una sola vez ha abierto sus puertas el Palacio de la Música Catalana durante el\npasado diciembre; fué con motivo del concierto de presentación de una pianista de\ntrece años, Dolores Roig. Hé aquí el programa ejecutado: 1.a parte, El cu-cui, Daquin;\nSonata, Scarlatti; Preludio y Fuga, Bach; Sonata patética, Beethoven.. 2. parte,\nConcierto, Grieg (acompañado en un segundo piano por Bias Net). 3. parte, Noelur¬\nno y Vals, Chopin; Siluelas 4.? y ó.», Reger; Arubesca, Debussy; Nocturno y Con¬\nsolación 3.a, Liszt; Nápoles, Leschetiziri. Dolores Roig tiene ya un gran dominio del\nmecanismo y posee una fuerza y un equilibrio superiores á sus años; con decir que es\ndiscípula de Vidiella y que su maestro fué el primero en animaria á hacer su debut, se\ndesprende que se trata de una jovencita que penetra seria y conscientemente en las\nvias del divino arte. En efecto, á cada obra dió su justa interpretacióm; Bach y Scos¬\nlatti fueron ejecutados con admirable claridad, la miama Patética, que á alguien acaso\nno satisfizo, fué dicha con una ingenuidad y una sencillez que cuadran mmy biemcon las\nobras de la primera manera de Beethoven. En cuanto á Chopínry Liszt, supo frasear¬\nlos con un gueto y un sentimiento exquisitos. Hago mis fervientas votos-y creo no\nserán defraudados-para que el genio tutelar de la simpática piamista, que la preservó\nde ser una niña prodigio, haciéndola cada dia más respetuosa de su arte, la guande de\ncaer el día de mañana en las aberraciones lamentables del virtuosismo.\nEn diciembre despierta de su letargo el gran Teatro del Liceo. Con la mmierte del\ntradicional empresario señor Berris, se suscitó la cuestión de la transformación radi¬\ncal que fuera por demás conveniente en nuestra primera escena; más, per falta mare¬\nrial de tiempo para pensar en ello con seriedad, se ha aplazado nara otro año la reso¬\nlución del problema, organizándose una nueva temporada de ópera ni nuejor ni peor que\nmuchaa otras.-Peor, me dice al oido un amigo, que tiene el hiamor de abonarse á\ndiario.-Acerca de ella, cabe consignar lo siguiente; Ante todo, que no han faltado\nBohémes ni Butterflies, y que La Wallyria ha sido definitivamente incorporada al\nrepertorio corriente itallano, la cual da derecho á ejecutarla de cuaiquier modo y á\ncortar la mitad de la partitura. Aforhinadamente, dos cuatantes, que. par graciazespr\n2Sie--\nO Biblioteca Nacional de España",
+                    
+                    20: "- I4-\ncial del cielo son artistas, nos han dado una interpretación ejemplar del primer acto de\nesta obra: la señora Passini-Vitale (Siglinda), y nuestro paisano el señor Reventós\n(Sigmundo), quien nos trae de tierras germánicas el secreto de la dicción wagneriana.\nPero lo mejor ha sido que en fecha memorable este primer acto ha sido cantado en\ncatalún. Nunca les agradeceremos bastante á esos artistas, en especial á la Passini y\ná su maestro de catalán el incansable Joaquin Pena, la sensación de arte que nos han\ndado. Muchos abonados que otras veces bostezaban de fastidio esperando el canto de\nla primavera, se enteraban con sorpresa, por vez primera, de lo que alli pasaba y\nescuchaban con el mayor interés. Aun á los que estamos familiarizados con el teatro\nvagueriano, nos parecía oir una cosa nueva.\nEsta primera tentativa no debe quedar un hecho aislado y fuerza es que tenga im¬\nportantes consecuencias. Háse probado que con buena voluntad un artista extranjero\npuede llegar á aprender su particella en nuestro idioma, y tenemos además excelentes\ncantantes catalanes; por otra parte el público siente acrecentar su interés tanto más\ncuanto mejor entiende lo que en la escena se dice. El éxito es seguro y creo ya llegado\nel momento oportuno para llevar á cabo la regeneración de nuestras representacionés\nlíricas, haciendo cantar en catalán las obras de positivo valor artístico. ¡Ojalá que este\nanhelo se convierta en realidad\nV. M. DE GIBERT.\nMADRID\nConferencias en el Ateneo.-Reseñaba en mi anterior crónica las que\nen la serie organizada por el Ministerio de Instrucción Pública, sobre materias artisti¬\ncas, se habian dado referentes á música; después de las de Rola y posteriormente á la\nfecha 20 de Diciembre, á que alcanzaba mi correspondencia, se dieron: dos por el\nmaestro Bretón, los dias 22 y 27, por la tarde; dos por el maestro Rogelio Villar, las\nnoches del 22 y 23, y dos que dí yo las tardes del 28 y 3I.\nBretón habló el primer dia acerca de «La influencia de Wagner en la lí́rica dramáti¬\nca», descubriendo desde luego su posición de defensa de la música ltaliana, en cuanto\ncree advertir una preterición de ella y un olvidó que no se hallan en proporción con sus\ndefectos, y atribuyendo el daño, en su mayor parte, á un auge inrazonado del culto á\nWagner, el cual atribuye, más que á un sincero y devoto conocimiento, á una imposi¬\nción de la moda, que es avasalladora y que en su afán de llevar sus entusiasmos hasta\nel último límite, no ve los defectos cuando toma el camino de elogiar, ni las virtudes\ncuando inicia su corriente de desvio hacia un género ó un grupo de autores. Hizo un\nparangón entre el género latino y el germano, no admitiendo inferioridad ni agota¬\nmiento en el nuestro, y si un día fué apóstol del wagnerismo, declara hoy su propósito\nde hacer resaltar más sus defectos, como remedio saludable del mal antes citado.\nEra su empeño, más que una crítica pura, de altura, una crítica de aplicación con\nvistas á casa. para ello le fueron precisos argumentos más plásticos aunque menos ri¬\ngorosos; tuvo que exagerar las consecuencias de sus tesis, haciendo obra polémica y\nde actualidad. En suma, creyó deber de todos el ir contra el wagnerismo á ultranza,\nclamar contra los defectos del arte alemán, declarar peligroso, por incompatible con el\ngenio de nuestra raza, su imitación, la prosecución de su escuela, etc., etc.\nLa segunda conferencia versaba acerca de la «orientación del teatro lírico dramáti¬\nco de España» y era algo asi como la continuación de la anterior. Se proponia en\naquella el examen de nuestra capacidad nacional para producir música; abundó en esta\nacerca de lo mismo. Citó, para ello, algunos datos conocidos, tales como la fama de\nlas gaditanas en tiempos de Augusto, como graciosas en la danza y el canto; el caso\nde San lsidoro en el siglo VIl y las academias del Califato de Córdoba; los tiempos de\nMorales, Victoria, etc.; los tratadistas nuestros que tuvieron verdaderas adivinaciones\nO Biblioteca Nacional de España",
+                    
+                    21: "antes que ninguno otro extranjero; la producción de tonadiilas en tiempos más cerca¬\nnos á nosotros y los ensayos ó intentos de ópera del primer tercio de nuestro siglo\nXIX. Ya casi en nuestros dias, midió la importancia de la zarzuela, pintando las cir¬\ncunstancias en que se produjo y las causas que la hicieron declinar.\nDe todo ello deducia el que no hay razón para que no surja en nuestra patria,\nactualmente, un músico de importancia mundial: pero achacó al ambiente poco propicio\nel que nuestra producción no sea sorprendente y el florecimiento enorme.\nHabló Bretón de la necesidad de hacer un arte nacional de carácter, para lo cual\nposeemos sello propio y fantasía creadora, faltándonos la conciencia de ese carácter,\nuna orientación y el apoyo oficial. Los remedios del mal actual los sintetizó abogando\npor la creación del teatro lírico nacional subvencionado por el Estado. Imprescindible\npaso para llegar á él es una unión anterior de los músicos españoles que no existe.\nVillar, en su primer día habló de «Los músicos españoles contemporáneos», dando\nuna visión totalmente optimista, lo mismo en cuanto á producción que en cuanto á eje¬\ncutantes, etc. Menos piadoso en lo que toca á la protección oficial y á la critica, al apoyo\npúblico social y á las facilidades de las empresas y editores, examinó punzantemente\nmuchos de estos extremos. Hizo hincapié en la dañosa corriente (en su sentir), técnica\nque con exageración impera en sus compañeros de producción, olvidando factores ta¬\nles como la linea melódica, inspiración, el contenido-en suma-, ante lo puramente\nformal ó de factura.\nSu segunda conferencia era el balance de música y músicos españoles contemporá¬\nneos, lo que tenemos y lo que nos falta musicalmente. Su posición (muy difundida\nentre sus compañeros), consiste en decir que tenemos gran número de músicos exce¬\nlentes y ejecutantes distinguidos y no escasa producción, pero que la culpa de que no\nse considere á los músicos, ni se crea que existen, está en los aficionados, con sus\nmodas: en el Estado, que no es pródigo; en los organismos oficiales, que no orientan\ndebidamente á los ministros; en las sociedades particulares, como la Filarmónica, que\nson egoistas; en los editores, que no quieren arriesgar sus capitales; en los críticos,\nque no tienen preparación, ni sirven patrióticamente la causa nacional, etc., etc... En\nsuma; nuestros músicos, según puede verse, hace tiempo que, ó abandonan sus gabi¬\nnetes y la producción de partituras ó las alternan con un género de propaganda social,\nque no se hace con notas precisamente, sino con ataques, proclamas, manifiestos y\nprotestas... Señalé yo, antes de hoy, el peligro que esto tiene, y es este el de que no\nes posible que acudan á sumar voluntades los que se sienten llamados á fomentar,\npero llamados á palos.. Pide Villar con gran razón la Asociación Nacional de Música,\npero ¿cree sinceramente que acudirán á ellá aquellos á quienes llama ineptos, egoistas,\nmalos, etc.? Y, sin embargo, de unos y otros, de todos, se necesita para esta simpática\nobra nacional. Al igual de la Asociación Nacional de Música (idea que ha expuesto ya\nbrillantemente en estas columnas) abogó por el teatro lírico nacional, subvencionado\npor el Estado: ojalá en sus dos peticiones, que cuentan con toda muestra simpatia,\ntenga la mayor fortuna, pero modere algo sus procedimientos y sus palabras: «consig¬\nna» para los músicos, debe de ser, dijo, «lo primero, lo nuestros... Si eso dicen los\nmúsicos, ¿qué decir del egoísmo de las demás gentes? acómo criticar de élo... Ulna par¬\nte final tuvo Villar de crítica para el pliego de condiciones del nuevo arriendo del Real,\npero hoy no tiene su examen tanta importancia después de la adjudicación celebrada.\nDe mis conferencias soy el menos indicado para hablar: dediqué mis dos tardes aj\neramen del estado de nuestra cultura de Bach; por mi balance, dada la escasez de nues¬\ntras audiciones de obras vocales y orgánicas, y contando en el número de las conoci¬\ndas hasta las obras que se utilizan como escuela, para aprendizaje, entre nosotros y\ntodo cuanto ha figurado en nuestros programas, en el caso más favorable no puede\nestimarse que conozcamos ni el veinte por ciento de la obra del maestro de Eisenach,\nLa nota crítica que sintetiza nuestro estado es el contraste entre la estimación en que\ntenemos á Bach, que es enorme, tal como se merece y lo reducida que es la cultura que\nde él tenemos. Examiné el curso que la cultura de Bach ha llevado fuera de España;\n- I5-\nO Biblioteca Nacional de Lsull",
+                    
+                    22: "-16-\nTras las obras monumentales editadas por la Bach-Gaselschafi y la N. B.G., el estu¬\ndie se ha hecho posible con gran comodidad; la producción literaria que como conse¬\ncuencia de esto se ha realizado es enorme. Característico, entre nosotros, es que estos\nlibros-sobre todo los manuales, que resumen las conclusiones halladas-, son muy co¬\nnocidos por nuestros profesionales y aficionados; pero nadie conoce llas obras critica¬\ndas, las obras originales: es una cultura, toda ella de segunda y tercera mano.\nYo preconicé la aplicación de un método más cientifico, de mayor rigor, el que hoy\nse emplea en todos los estudios é investigaciones y á su demostración dediqué las dos\ntardes. Presenté las ediciones, establece las categorias de las obras, enseñé su manejo\nsegún él problema que en cada momento puede proponerse un investigador y procedí á\nrealizar varios ejercicios prácticos ejecutando en el piano multitud de obras.\nLos ejercicios consistieron singularmente, en deducir el carácter de la obra de Baca\ny mostrar sus principales facetas valiéndome de los Preludios del Clave bien tempera¬\ndo; en un análisis comparativo de una son ala bíblica de Ruhnau y el Capmicclo\nsopra la lontananza del suo fralello dilettisimo de Bach, estudio conocidísimo que se\nsuele hacer sin oir las obras, á remediar lo cual, simplemente, á hacer una comproba¬\nción experimental y no á hacer un hallaago, estaba destinado; otro ejercicio fué de\nexamen y comparación de ediciones, para mostrar la ventaja que esto tiene para ha¬\ncerse con un cierto criterio de interpretador, y para discernir en sus lecturas; el otro\nfué la evolución de la interpretación de Bach por análogos procesos.\nGeatro Renl.-El movimiento del cartel desde mi última crónica acusa las des¬\npedidas de la Rriesten-Rabl, la Storchia y Rousseliére, Olello con la Gagliardi, Paoll y\nBenedetti, Lohengrin con las señoras De Lerma y Guerrini y Viñas, Rigoletto con\nla Domar primero, con Josefina Sanz después, Macuez y Nani, Aida con las señoras\nGagllardi y Guerrini, y Scampini como tenor, y el estreno de Resurrección, ya anun¬\nclado en mi áltima crónica. En las óperas nuevamente puestas hay que apuntar los éxi¬\ntos de la Gagliardi en Otello y Aida, los de Paoli, Scampini y Viñas en sus obras res¬\npectivas, y el de Macnez y Nani en Riavletto.\nDel-estreno de Resurrección poco debo decir. La célebre novela de Tolstoi, ha ser¬\nvido de base á César Hannau para compendiar en su libro unas cuantas escenas, á las\nque puso música un joven compositor italiano, á quien no habia oído nombrar antes de\nahora: Francó Alfano. La obra no gustó y hasta motivó otra protesta de los abonados\ncuando se hacia la tercera ó cuarta vez. La critica trató, en general, despiadadamente\nal autor, lamentando que mientras el Teatro Real está casi cerrado para los composito¬\nres españoles, se abrían sus puertas á jóvenes que empiezan su carrera en otros paises,\nsin que sus obras traigan el marchamo de la celebridad. Alfano es en su ópera un Pue¬\ncinieim Puecini: los procedimientos, la instrumentación, la dirección artística van por\nel sendero del célebre maestro italiano, pero fáltale su calor, sus cosas, ese encanto\nque parar una parte del público tienen las melodías de Boheme y de Toeca. A mi juicio\nAlfano no es ningún tonto; tiene talento y así como en Resurrección, me parece que\nel cuentó acto de mejor que el tercero, el tercero que el segundo y el segudo quetel\nprimero, así creo también que ha de seguir subiendo y mejorando.\nY para terminar con el Teatro Real, sólo resta decir, que ha sido adiudicado á los\nmiemos empresarios actuales, señores Callaja y Boceta, por cinco años forzosos y cin¬\nco voluntarios.\nMIGUEL SALVADOR.\nEnero de 1912.\nSieca\nO Biblioteca Nacional de España",
+                    
+                    23: "- I7-\nPARIS\nTodo cambia en este mundo, desde Múgica que se nos vuelve straussista y malhe¬\nrista, hasta el modo de ser de la Revista, y para convencerse de ello no hay más que\nleer las confesiones de Zubialde sobre Max Reger. Me asombré tanto al leerlas, que\nseguramente no me asombraré más el día que vea á Nin tocando en un clavecin sus\ncouperinadas. Y no es ciertamente que mi opinión esté en desacuerdo con la suya,\npues para esto se necesitaría que yo conociera algo de este autor, cuya producción ra¬\nra vez viene á París; lo que me asombró fué más bien la sinceridad del artículo en\ncuestión y su espontaneidad. Y esto demuestra claramente que de un régimen discipli¬\nnado pasamos á una fraternal independencia, y que convencidos plenamente que el\nataque esperado de las mil bayonetas no viene ya, y que\n«todo está igual-parece que fué ayer»\ncomo decían las zarzuelas pseudo-españolas de nuestros padres, nos vamos alejando\nde la época en que se nos prohibía tocar á cosas que parecían sagradas en el dominio\nmúsico, gracias á esa pirámide cuyo vértice es el artículo de Villar y cuya última pie¬\ndra es la confesión de Zubialde, cuyos gustos confinan al Norte con Malher, Bruckner,\nMax Reger y el Océano Glacial Artico. ¡Bravo, amigo Zubialde, yo le aplaudo y le\nsecundarél\n¿Y qué tiene que ver todo esto con las cosas de Paris? preguntará el impaciente\nlector. Pues que me encuentro apuradísimo á causa de otra confesión y estoy retardán¬\ndola todo lo que puedo con este exordio impertinente, y que al fin tendré que decir que,\ná pesar de haber prometido en mi crónica anterior hablar largamente de «Berenice»,\nde Magnard, me será imposible hacerlo por la sencilla razón de que no la conozco aún.\nDe ello tiene la culpa el violin-solo de la Opera Cómica, á quien pregunté el otro dia\npor el nuevo estreno. «Es tristísimo, me dijo, lo que ocurre con Berenice, pues las no¬\nches que se representa, el público es escasisimo, y este público á medida que se vá\nenterando de lo que es la obra se va marchando poco á poco y terminaremos en la\nmás completa soledad.» Me concederá el lector que esto no es para animar á nadie,\nPor lo demás, se puede augurar que «Berenice» seguirá el camino de otras tantas\nobras, hechas como ella con la mejor intención, con buenas cualidades, pero que no\ntienen nada de teatrales, pues el desarrollo sinfónico le es al público indiferente: por\neso yo continúo creyendo que en el dominio del drama musical cada dia vamos más\ndescaminados, sin que para ello nos sirva de escarmiento los innumerables fracasos á\nque dan lugar los estrenos, casi todos estériles, de los tres teatros de Opera de Paris.\nY lo peor del caso es que los dos caminos que siguen los autores llevan siempre al\nmismo fin, pues el vagnerismo de Magnard, de Breville, de Mariotte, ha dado el mismo\nresultado que el debussysmo de Severac y de Ravel. ¿Quien duda que Berenice, Eros\nVainqueur, Salomé, Le Cur du Moulin y Heure Espagnole, son obras caldas que no\nse levantarán jamás?\nLos conciertos continúan en progresión creciente, y aquí sí que el arte musical pre¬\nsenta una falange de autores brillantes y de una vitalidad cada vez más acentuada,\naunque no sin tristes excepciones entre las que tengo que contar una Simphony anti¬\nque de Widor que ha querido hacer un pisto greco-religioso cuyo tema principal es el\nTe Deum. El resultado fué terrible y los desgraciados que la aguantaron (yo no pude\nir ese dia) todavia se crispan de nervios cuando se habla de ello. Después Pierné ha\ndado dos audiciones de la Samnation de Faust con el único y mercantil fin de llenar la\nsala sin tener que ensayar. En Lamoureux continúan con la música rusa; Sintonia de\nBorodine, el admirable Conte Féerique de Rimski y algunas primeras audiciones que\nel público escucha bostezando é irupaciente por ver llegar á Thibaud con su violin má¬\ngico, ó la Bréval, con su gran voz cascada, con la que interpretó (pues no tiene otra)\nel iumenso final del Crepúsculo de los dioses.\nTambién hemos tenido concierto Hasselmans, esta vez dirigido por Casella, peró\niqué manera de transformarse este hombre de palo, flaco é inexpresivo Con una fuer\nOO Biblioteca Nacional de España",
+                    
+                    24: "- 18-\nza de dominio, con una casi maestria, dentro de sus pocos años, y con una exuberancia\nde expresión, dirigió este concierto, que ha sido uno de los mejores de esta temporada.\nEn el programa figuraban Don Juan, de Strauss; la overtura de Maestros Cantores,\nuna sinfonía de Enesco, que tal vez me hubiera gustado si no hubiera tenido enfrente\nal autor llevando el compás con la cabeza; un concierto de Saint-Saéns, tocado por un\npianista que daba muchas notas falsas, pero que en cambio hacia muchos gestos y que\nal público le gustó muchisimo, yo no sé por qué; y por último una rapsodia de Casella\nllamada ltalia, cuyos temas son populares. Esta rapsodia es deliciosa como sentimien¬\nto, como ritmos y como color orquestal, y sus temas, sicilianos en su primera parte,\ntienen cierta analogía con el sentimiento andaluz (el verdadero, el de procedencia ara¬\nbe, no el importado por los comerciantes de la música). En cuanto á la segunda parte,\nestá hecha con temas napolitanos, que entusiasmaron al público, sobre todo cuando los\nvioloncellos atacaron triunfantes el admirable funiculi funicula.\nLa música española continúa cada vez con más partidarios aquí, hasta el punto de\npreguntarme yo si el verdadero renacimiento español saldrá de Paris, una vez que to¬\ndas las ilusiones de los compositores españoles vienen hacia aquí, sean castellanos co¬\nmo del Campo, Villar, Pérez Casas; sean catalanes como Granados, ó vascongados\ncomo Guridi. El caso es que este año abrió camino la Asociación de Concerts Rouges\ncon un programa español, donde figuraban A lbéniz con su Catalonia; Falla con sus me\nlodias, que fueron interpretadas por Lucy Villemin, y sus piezas españolas que inter¬\npretó él mismo; Llobet, cada vez más maravilloso con su guitarra; Cassado, con su\nHispania de piano y orquesta, y por último el firmante de esta crónica, que estuvo re¬\npresentado por el Quinteto de piano y cuerda y por la suite Sevilla. En febrero ten\ndremos un festival del Cuarteto Sangrá, y Lejeume que prepara dos, en febrero y en\nmarzo.\nParent ha empezado los I7 cuartetos de Beethoven. Creo que no me cansaré nunca\nde oirlos. En cuanto á su pianista, Marta Dron, por no ser menos, ha empezado tam¬\nbién una audición integra de las 32 sonatas de piano. «¿Le dan á usted mucho que hacer\nesas 32 sonatitas?o esto le preguntó hace unos dias el ilustre Rister, que se encontró\nfrente á ella en una cena; pero por más que hice no pude descubrir en su cara de ce¬\nmerciante acemodado, ninguna ironía, por lo menos al exterior.\nTambién empiezan las sociedades «Nacional» y «S. M. I », por cierto, con una vuelta\ná sus antiguas rivalidades. Ello es que en la época de su fundación, Fauré se encargó\nde la presidencia y tomó el puesto con gran entusiasmo, pero salió un critico intem¬\npestivo que, en su deseo de hacer mal, vació en un periódico todas cuantas tonterías\ntenía en su caletre y dijo además algunas verdades, entre ellas la de que Fauré habia\naceptado la presidencia en segundo lugar y eso por haberla rechazado Debussy, á\nquien se la habfan ofrecido. De este articulito, nació primero un duelo y después una\nretirada de Fauré que, sin dejar de ser presidente, no ha vuelto más por allí. Por fin,\neste año se sabe que, olvidando sus rencores con la Nacional y con dIndy, vendrá á\nésta, conduciendo su falanje de intérpretes, y deja á sus discipulos, que forman el nú\ncleo de la S. M. I., con tres palmos de narices. Estos, consternados, quieren á toda\ncosta deshacer antiguos errores y festejar á su presidente, que al fin irá el dia 27 de\neste mes, imponiendo condiciones y dificultades innumerables. De todo este periodo\nhistórico se ha resentido el primer concierto de la Nacional, en el que, á pesar de ser\nla Sociedad eminentemente scholista, no figuraron más que obras conservatoriales; de\nRauré-¿cómo no?-de Debussy y de Roger Ducasse, que aseguraba muy serio hace\ntres meses que en su vida pondria una obra suya en la Nacional. Inútil decir que la jun¬\nta de gobierno de esta Sociedad aplaude hasta romperse las manos á los conservatoria¬\nles «para hacer rabiar á los otros».\nLos conciertos menores se van multiplicando poco á poco, bien recibidos casi siem¬\npre por un públlco que nunca paga, si bien unos son interesantes y otros aburridísi\nmos. Entre los interesantes, debo hablar de los de Blanca Selva, inmensa pianista en\nAl doble sentido fisico é intelectual, que, entre otros conciertos, ha dado uno dedicada\nO Biblioteca Nacional de España",
+                    
+                    25: "WAGNER\nDE MADRID\n- I9-\ná las obras de Severac, desde el Chant de la Terre, poema agricola ó pocó menós,\nhasta Cerdagna, su última obra. También he de hablar de dos orquestas flamantes;\nla hdedical fermada por el Cuerpo de doctores en medicina, que no ha empezado aún\ná funcionar, y la UJ. F. P. C ó sea Unión des Femmes Professeurs et Compositeurs.\nConfleso que cuando lei el titulo me horrorizé á la idea de una mujer tocando el trom¬\nbón, pero después me han tranquilizado diciéndome que el elemento femenino es sola¬\ntuente para la cuerda y que para los instrumentos de viento entran en el redil algunos\nlobos pacíficos, como dice un critico de buen humor. Hablaré de esta orquesta en mi\npróxima crónica, pues, según dicen, interpretan muy bien el programa, que dirige pa¬\nternalmente el obeso y barbudo Rhené-Báton, excelenfe «kapellmister». La cosa, des\npués de todo, es natural en un hombre que se llama Bálon. A los conciertos aburridos\nprefiero dejarlos en el tintero. ¿No se les hace un favor con ello?\nJOAQUÍN TURINA.\nEnero 1919.\nNOTICIAS\nUn hecho de la más alta importancia para el arte español acaba de realizarse. Se\ntrata de los conciertos de música española que, bajo la dirección de Arbós, se han ce¬\nlebrado, primero en Moscou, con la Orquesta Filarmónica, y luego en San Petersbur¬\ngo, con la Imperial. El programa era el siguiente en ambos conciertos;\nSuite murciana. Pérez Casas.\nLa Divina Comedia. Conrado del Campo.\nZamóra, Guajiras y Tango, piezas para violín. Arbós. (Ejecutadas por el violinista\nRivaude.\nEvocación, El Puerto y Catalonia. Albéniz. (Las dos primeras en la transcripción\norquestal de Arbós.\nLos conciertos han tenido un éxito inmenso y al de San Petersburgo concurrieron\nlas primeras figuras del arte ruso. Todas las obras importantes fueron aplaudidisimas\ny bisadas las de violín y algunas otras.\nEl éxito de esta tentativa afortunada ha repercutido en otros paises, y actualmente\nse siguen negociaciones, que la discreción nos impide hacer públicas, para extender las\nmanifestaciones de arte español á otras importantes capitales.\nTambién nos es muy grato consignar el éxito alcanzado en Berlin por otros compa¬\ntriotas. El violinista Blanco Recio ha dado allí recientemente un concierto, ejecutando,\nentre otras composiciones, una Romanza de lesús Guridi, y habiendo merecido la obra\ny el intérprete los más favorables juicios de la crítica.\nUna noticia que ha producido sensación en los circulos artísticos, pero que convie¬\nne acojer con toda clase de reservas, se ha esparcido días atrás. Recordarán nuestros\nlectores los juicios sobre la obra de Strauss atribuidos á Sigfrido Wagner y que ésté\nnegó con tibieza. Pero parece ser que existen pruebas escritas de la certeza de aque\nllas virulentas diatribas y ahora se atribuye á Strauss el propósito de vengarse, hirien¬\nde á su enemigo en el punto más sensible, que, según malas lenguas, es la bolsa.\nAl efecto se dice que proyecta celebrar, en Bayreuth mismo, una temporada straus¬\nsiana, enfrente de la wagneriana, y en la misma época señalada para ésta. El principal\natractivo de esta saison sería las primicias de su nueva obra Ariadna en Naros, que\nStrauss está escribiendo en colaboración con su fiel Haffmannstal, acompañándole en\nel carlel El Caballero de la Rosa, seguido el Elektra y Salomé.\nSegún las noticlae que corren, se han entablado negociaciones, aunque sin resulta¬\ndó, para obtener el arriendo del Schloseentheater de Bayreuth, y después el del Teátro\nO Biblioteca Nacional de España",
+                    
+                    26: "- 20-\nReal, propiedad del Estado bávaro, con el que se ha venido á un acuerdo. En fin, se\nasegura que Strauss ha obtenido el concurso de Max Reinhardt, director del Teatro\nAlemán de Berlín, que se encargará de los cuidados de la puesta en escena y demás\nmenesteres extramusicales de la empresa.\nSe ha formado en Munich una Sociedad, de la que forman parte las principales fi¬\nguras musicales de la capital, para erigir, en un punto no designado todavía, un edifi¬\ncio destinado á grandes audiciones de obras sinfónicas y corales, en forma de festiva¬\nles periódicos. Se proyecta darle el nombre de Symphoniehaus y considerarlo como un\nbomenaje nacional al genio de Beethoven.\nDe algún tiempo á esta parte se ha puesto de moda el sacar las obras teatrales de su\nambiente normal para llevarlas á los mismos ó análogos lugares que aquellos en que la\nacción se desarrolla. Asi ahora se proyecta dar en Nuremberg una original representa¬\nción de «Los Maestros Cantores», colocándolos en condiciones de un realismo insupe¬\nrable. A falta de poder dar el primer acto en la iglesia de Santa Catalina, se celebrará\néste en el teatro; el segundo será delante de la casa de Hlans Sach y el tercero en la\npradera bordeada por el Penitz, tal como la pide el libreto. De realizarse esta idea,\ncuyas dificultades de orden artístico y hasta económico no se ocultan al menos perspi¬\ncpz, se llevará á efecto en el próximo verano.\nSe encuentra enfermo de una paralisis nerviosa, que inspira serias inquietudes, el\ncompositor Engelbert Humperdinck. Sin embargo, las últimas noticias de su posesión\nde Grunewald, donde se encuentra, son últimamente más tranquilizadoras.\nPerosi trabaja actualmente en una obra que bien puede calificarse de patriótica y\nbasta, si se quiere, de chauvinista. A la serie de sus poemas sinfónicos simbolizando\nlas grandes villas italianas, como Roma. Venecia y Florencia, está añadiendo uno con¬\nsagrado á Trípoli, considerándola ya como una vílla más italtana.\nEl doctor Otto Neitzel, hábil pianista, renombrado compositor y temido crítico de\nColonia, ha dado últimamente en Londres una conferencia sobre el humorismo en mú¬\nsica, tan instructi va como entretenida. Fué una reseña rápida de las más notables com¬\nposiciones musicales humoristicas, desde la famosa Fuga del galo hasta el recientísi¬\nmo «Caballero de la Rosav, de Strauss.\nEn general, hizo observar Neitzel, los músicos que dan conciertos salen con caras\ntan serias, que se diria que la risa no está permitida en música. Aun cuando un pianista\ntoca una pieza cómica, como tantas que han escrito los más insignes maestros, parece\ntan afligido como si hubiese perdido á una persona de su familia. La obra sonríe y él\npermanece taciturno.\nHumor y licor, afirma Neitzel, tienen, hasta cierto punto, igual significado. Los an.\ntiguos griegos y romanos se imaginaban que el equilibrio mental, y especialmente la\nproducción del buen humor, dependian de una suficiente ingestión de liquido en el cuer¬\npo humano.\nA los compositores barrocos de Paris les gustaba el buen Burdeos, y á Beethoven\nel vino del Rhin. Los modernos beben de todo y su música se asemeja á su manera de\nbeber.\nConocida es, casi por todo el mundo, la historia de la Fuga del gato, de Scarlatti;\nun gato que hace una excursión por el teclado, tocando solamente las notas negras, y\nproduciendo un extraño tema, del que el compositor tuvo la ocurrencia de servirse\npara hacer una fuga. Sino que como la fuga es á tres voces, y cada una de ellas con¬\nserva su independencia, Neitzel propone llamarla Fuga de los tres gustos. Estos gatos\nO Biblioteca Nacional de España",
+                    
+                    27: "- 21-\ncantan melancólicamente ó, mejor, lloran sus miserias; son gatos vagabundos, en cuya\ntriple alianza de plañideros se ha fundado el humorismo de Scarlatti.\nTambién el Cuco de Daquin es triste; se vé que no puede enorgullecerse de la legi¬\ntima posesión del nido que ha ocupado. Las Folies Francaises, de Couperin, son una\nSerie de bocetos parisienses, tan bizarros como sus titulos. Los hay, entre éstos, tan\ninesperados como Domtino couleur d'invisible, en una serie en que se reviste á los\ndominios de un balle imaginario con los colores más estrambóticos.\nRameau ha querido dar, en un motivo de su composición La Rameau, una idea de\nsu mujer, que era muy hacendosa, y describrir la limpieza de la casa y hasta el sacu¬\ndir de las alfombras.\nEn cambio, al título de Humorescas, que se dá á menudo á composiciones musica¬\nles, no corresponde siempre un sentido humorístico. En un Humoresca de Max Reger,\nse describe una orgia de diabios, después de abundantes libaciones de cerveza. Dvo¬\nral explaya su humorismo en las danzas rítmicas de los signos americanos; pero el\nhumorismo verdadero habrá que buscarlo en Neitzel mismo, pues, según nos refiere,\nha compuesto una Gavota, la Gavota de las ostras, hecha en acción de gracias por\ndiez docenas de ostras regaladas por un discipulo.\nDespués de haber explotado los compositores toda la ornitologia, he aqui que los\nmoluscos empiezan á introducirse en el mundo de la música.\nLa conclusión final que saca Neitzel de todo esto, es que para obtener lo cómico en\nmúsica lo mejor es un libreto gracioso y dejarse de lo demás.\nLa Nuova Musica de Florencia refiere la dolorosa historia de una orquesta com¬\npuesta de los mejores músicos de Bolonia, Ferli, Faenza y otras poblaciones de aque¬\nlla región, bajo la dirección del maestra Toni, que fueron á Milán con objeto de dar\ntres conciertos en el Teatro Lirico. Ln primera noche el teatro estaba vacio; una cin¬\ncuentena de personas; pero el éxito fué completo. Esto les daba mejores esperanzas\npara el porvenir. En efecto, en un concierto á precios reducidisimos que dieron al dia\nsiguiente, domingo, por la tarde, hubo gran concurrencia; pero la noche misma se vie¬\nron obligados á suspender la función porque, al tiempo de empezar, sólo se habian pre¬\nsentado en junto siete personas, de las cuales dos eran forasteras y estaban admira¬\ndas del amor á la música mostrado por los itallanos.\nEl maestro Soffredini, uuo de los poquísimos concurrentes, escribe comentando el\nsuceso:\n«¿Es posible que este Milán, este decantado centro artistico, no contase mil, qui¬\nnientas, cien personas lo bastante aficionadas á la música para acudir á escuchar un\nespléndido progvama sinfónico?\n¿Es posible que, aparte de mí, no hub iera siqniera uno de los trescientos profeso¬\nres de Milán á quien aquello interesase?... Si cada uno de dichos maestros hnbiera he¬\ncho lo que nosotros, llevar consigo tres alumnos, el teatro hubiera contenido más de\nmil personas. ¿Y todo el resto, los inteligentes, los músicos, los dilettanti? Nadie,\nnadie.»\nY el periódico italiano concluye, á guisa de comentario, con un refrán que pudiera\ntraducirse con el nuestro;\n«En todas partes cuecen habas.»\nEl 24 de este mes se festeja en Alemania el segundo centenario del nacimiento de\nFederico el Grande. Antes de que los oradores oficiales tomasen la palabra para elo¬\ngiarle como guerrero, como rey ó como filósofo, los escritores musicales se habian\napresurado á recordar su habilidad como flautista.\nQuien más detalles ha dado sobre su talento musical ha sido Henningsen, en un li¬\nbro titulado Fridericus mein Mónig. El nos revela que los adagios eran los que lleva¬\nO Biblioteca Nacional de España",
+                    
+                    28: "- 22-\nban la preferencia del regio artista. El vencedor de Rosbach y amigo de Voltaire de¬\nrrochaba el sentimiento en los cantabiles; hasta el punto de arrancar lágrimas á los\noyentes sensibles.\nEs lástima que tuviese el aliento corto y que, á causa de ello, se tomase ciertas li¬\nbertades con los tiempos.\nLa flauta era para él un amigo de todos los días y la llevaba consigo en todas sus\ncampañas.\nCuando, al envejecer, comenzó á sufrir de la gota, sus dedos se hicieron menos\nágiles, perdió además un diente y en el invierno de I778 tuvo que renunciar á tocar.\nEntonces es cuando escribió á su amigo Franz Benda: «He perdido mi mejor amigo.»\nLa ópera de Federico el Grande, «ll Re Pastore», se representará el 2 de Febrero\npróximo en el teatro del Conservatorio de Berlín.\n-- 6c¬\nEn una entrev ista que ha tenido Félix Weingartner con un colaborador del Berli¬\nner Zeitung, le ha hecho saber que está termina ndo una ópera titulada «Cain» y cuyos\npersonajes son Adán, Eva, Caín y Abel. La obra durará dos horas.\nWeingartner tiene ya ofertas de cuatro te atros franceses que quieren represen¬\ntarla.\n--8-\nAutobiografia de Mauricio Ravel, per él mismo.\n-- Los grandes pianistes del siglo XIX: Rubinstein, por Artur Hervé y Hérve-Grubelle. (Traducción del francés por José Subirá). —Ediciones Bernareggi. Buenos Aires.\nVamos recibiendo sucesivamente, la colección de biogrefías de artistas que está publi¬\ncando la casa editora Bernareggi, de Buenos Aires. Hoy nos ha llegado la de Anión\nRubinstein, que viene á ser la segunda de las que con el título genérico de «Grandes\npianistas del siglo XIX» publica la mencionada editorial. (La primera fué la de Thal¬\nberg, cuya obra reseñamos ya en su día). En la de Rubinstein, como en la anterior,\nse sigue el sistema de la colaboración francesa, siendo los autores de la obra que rese¬\nñamos Arthur Hervé y Huré-Grubelle. La traducción é' española, como su título\nindica, ha sido confiada á nuestro querido colaborador José Subirá, el cual ha hecho,\nseguramente, lo que ha podido dadas las condiciones en que tales trabajos se sue?\nrealizar.\nO Biblioteca Nacional de España",
+                    
+                    29: "PublicaCIONES RECIBIDAS\nPor L Z,\n- 13-\nCompositores vienneses contemporáneos.-Por Ricardo Heubergert. (Traducción del alemán por José Subirá). —Ediciones Bernareggi. Buenos Aires.\nCompositions de Roger-Ducasse.-Éditions Maurice Senart. Paris.\nEhrenpromotion der Musik-Akademie des Westens zu Düsseldorf.-Düsseldorf, 1912.\nCantos populares de Asturias.-Por Eduardo M.» Torner. Primera y segunda se¬\nrie.—Madrid, ig11.\nLa gama temperada de Holder.-Por José Subirá.- Madrid, 1912.\nUniversidad de Oviedo. Discurso leído en la solemne apertura del curso académi¬\nco de 1911 á 1912 por el doctor D. Eduardo M.ᵃ Torner. Oviedo, 1911.\nCantos y bailes de Asturias.-Por Elisa Carvajal. Gijón, 1011.\nGuía práctica de Oviedo y Asturias.-Por Elisa Carvajal.—Gijón, 1911.\nMotet et Sanctus (O Filii et Filiae). —Par Théodore Dubois.—Édition Heugel et Cle.\nParis.\nLa Semaine Sainte à Rome et les auditions de musique sacrée.—Par Pierre-Barthélemy Gheusi.—Paris, 1912.\nPartituras varias de los maestros españoles Conrado del Campo y Enrique Fer¬\nnández Arbós, que estos artistas nos han obsequiado directamente.\nTres melodías del maestro Ravel.\nRosine à Paris. Valse caprice pour piano.—Par Leopold Godowsky.— Editions\nA. Z. Matbot et Co. Paris.\nVocabulaire français-allemand des termes techniques de la musique.—Par Adolphe Boschot.—Paris, 1912.\nArranque, canción andaluza; Rondalla, jota aragonesa; A Belén, villancico navarro.\n—Por Jesús de Monasterio.— Ediciones Vidal Llimona y Boceta. Barcelona.\nChronique de ma vie.—Par lgor Strawinsky.—Éditions Denoël et Steele. Paris.\nFiestas de Nuestra Señora de Montserrat y del V Centenario de su coronación pontificia. Solemnes oficios. 27 de Abril de 1ºı2. —Editorial Altés. Barcelona.\nO Biblioteca Nacional de España",
+                    
+                    30: "-24-\nLos señores Profesores de música que se suscriban á esta\nRevista tendrán derecho á la publicación gratuita de arriba\nanuncio de dos líneas.\nEugenio Jáurequi. Afinador de pianos.-Se hacen toda clase de arreglo\nreparaciones en pianos, armonios y pianolas. Bailén, 19, 2.o derecha.\nEscuela de canto. (Método Lamperti).—Dirigida por el tenor Lucio de\nLaspiur.-Plaza Nueva, 8 Bilbao.\nIsmael Echazarra.- Teoría musical. Piano, Harmonía, Contrapunto, Fuga.\nMarqués del Puerto, a, enfrente de la «Sociedad Filarmónica».\nViolines antiguos y violoncellos.-Compra á altos precios.-Dirijirse\nal Sr. Sanz. calle de San Lorenzo, 9.-MADRID.\nREVISTA MUSICAL\nAPARECE UNA VEZ AL MES\nPRINCIPALES COLABORADORES\nRafael ALTAMIRA.-Ramón ARANA.-Enrique de BENITO.-Giullo\nRAD.-LedWIN BONVIN, B. J.- MatGo R. BARROSO.- Conrado del\nCAMPO.-Eduardo L. CHÁVARRI.-AOSé DAENE,- Eduardo DAG-\nNINO.-DE GEUS.-Juan de FRRAETI.-Joaquín FESSER.-Francisco\nGASCUE.-Jullo GOMEZ.-Vieemte R. GIAERT.-Rarael MITJANA.-\nOlallo AORALES.-Joaquin NIN.-J. F. de OCAVARRIA.-Nemesio\nde OTAÑO, e. J.-Relipe PADRELL.- Cecilio de RODA.- Miquel\nSALVADOR.-Nicetas de TAVIRA.-Joaquín TURINA.-Guillermo\nURIBE.-R. P. Luos VILLALBA.- Rogelio VILLAR.- Ignacio\nZUBIALDE.\nCORRESPONDENCIAS NACIONALES; de Barcelona. Gijón, Granada. León. Madrid, Oviedo, San Sebastián,\nSantander, Sevllla, Carragona, Valencia y Zaragoza,\nEXTRANJERAS. de Berlin. Bruselas, Burdeos, La Hava, Londres, Milán, París y Roma.\nPRECIOS DE SUSCRIPCION\nESPAÑA: 1 año, 5 pesetas.—EXTRANJERO: 1 año, 6 francos, ó moneda equivalente.\nNÚMERO SUELTO, 5O CÉNTIMOS\nREDACCIÓN Y ADMINISTRACIÓN\nRonda, núm. 30, bajo\nBILBAO\nO Biblioteca Nacional de España"
+                };
+                
+                this.initializeEventListeners();
+                this.loadPage(this.currentPage);
+            }
+
+
+            initializeEventListeners() {
+                document.getElementById('pageSelect').addEventListener('change', (e) => {
+                    this.goToPage(parseInt(e.target.value));
+                });
+
+                document.getElementById('prevBtn').addEventListener('click', () => {
+                    this.previousPage();
+                });
+
+                document.getElementById('nextBtn').addEventListener('click', () => {
+                    this.nextPage();
+                });
+
+                document.getElementById('zoomInBtn').addEventListener('click', () => {
+                    this.zoomIn();
+                });
+
+                document.getElementById('zoomOutBtn').addEventListener('click', () => {
+                    this.zoomOut();
+                });
+
+                document.getElementById('resetZoomBtn').addEventListener('click', () => {
+                    this.resetZoom();
+                });
+
+                document.getElementById('pageImage').addEventListener('click', () => {
+                    this.toggleZoom();
+                });
+
+                document.getElementById('searchInput').addEventListener('input', (e) => {
+                    this.searchText(e.target.value);
+                });
+
+                // Navegación con teclado
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'ArrowRight') this.nextPage();
+                    if (e.key === 'ArrowLeft') this.previousPage();
+                    if (e.key === '+') this.zoomIn();
+                    if (e.key === '-') this.zoomOut();
+                    if (e.key === '0') this.resetZoom();
+                });
+            }
+
+            async loadPage(pageNumber) {
+                try {
+                    this.currentPage = pageNumber;
+                    this.currentPageIndex = this.pages.indexOf(pageNumber);
+                    
+                    // Actualizar controles de navegación
+                    this.updateNavigation();
+                    
+                    // Cargar imagen
+                    const imagePath = `Revista Musical Bilbao/PAGE XML/Revista-musical-Bilbao-1-1912-n-o-1.pdf_page_${pageNumber}.png`;
+                    document.getElementById('pageImage').src = imagePath;
+                    
+                    // Cargar transcripción XML
+                    await this.loadTranscription(pageNumber);
+                    
+                } catch (error) {
+                    console.error('Error cargando página:', error);
+                    this.showError('Error al cargar la página. Verifique que los archivos estén disponibles.');
+                }
+            }
+
+            async loadTranscription(pageNumber) {
+                // Comprobar si existe transcripción estática para esta página
+                if (this.staticTranscriptions[pageNumber]) {
+                    this.displayStaticTranscription(pageNumber);
+                    return;
+                }
+                
+                // Si no hay transcripción estática, intentar cargar XML
+                try {
+                    const xmlPath = `Revista Musical Bilbao/PAGE XML/Revista-musical-Bilbao-1-1912-n-o-1.pdf_page_${pageNumber}.xml`;
+                    const response = await fetch(xmlPath);
+                    
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    
+                    const xmlText = await response.text();
+                    const parser = new DOMParser();
+                    const xmlDoc = parser.parseFromString(xmlText, 'text/xml');
+                    
+                    this.displayTranscription(xmlDoc, pageNumber);
+                    
+                } catch (error) {
+                    console.error('Error cargando transcripción:', error);
+                    this.showTranscriptionError();
+                }
+            }
+
+            displayTranscription(xmlDoc, pageNumber) {
+                const container = document.getElementById('transcriptionContainer');
+                container.innerHTML = '';
+
+                // Metadatos
+                const metadata = this.createMetadata(xmlDoc, pageNumber);
+                container.appendChild(metadata);
+
+                // Regiones de texto
+                const textRegions = xmlDoc.querySelectorAll('TextRegion');
+                
+                if (textRegions.length === 0) {
+                    container.innerHTML += '<div class="error">No se encontró texto transcrito en esta página.</div>';
+                    return;
+                }
+
+                textRegions.forEach((region, regionIndex) => {
+                    const regionDiv = document.createElement('div');
+                    regionDiv.className = 'text-region';
+                    regionDiv.setAttribute('data-region', regionIndex);
+                    
+                    const textLines = region.querySelectorAll('TextLine');
+                    let regionText = '';
+                    let confidenceSum = 0;
+                    let confidenceCount = 0;
+                    
+                    // Combinar todas las líneas en un solo texto fluido
+                    textLines.forEach((line) => {
+                        const textEquiv = line.querySelector('TextEquiv Unicode');
+                        if (textEquiv && textEquiv.textContent.trim()) {
+                            const lineText = textEquiv.textContent.trim();
+                            
+                            // Agregar espacio entre líneas si es necesario
+                            if (regionText && !regionText.endsWith(' ') && !lineText.startsWith(' ')) {
+                                regionText += ' ';
+                            }
+                            regionText += lineText;
+                            
+                            // Calcular confianza promedio
+                            const confidence = line.querySelector('TextEquiv')?.getAttribute('conf');
+                            if (confidence) {
+                                confidenceSum += parseFloat(confidence);
+                                confidenceCount++;
+                            }
+                        }
+                    });
+                    
+                    if (regionText.trim()) {
+                        const textDiv = document.createElement('div');
+                        textDiv.className = 'text-content';
+                        textDiv.setAttribute('data-region', regionIndex);
+                        textDiv.textContent = regionText;
+                        
+                        // Indicador de confianza OCR promedio para toda la región
+                        if (confidenceCount > 0) {
+                            const avgConfidence = confidenceSum / confidenceCount;
+                            const indicator = document.createElement('span');
+                            indicator.className = 'confidence-indicator';
+                            if (avgConfidence > 0.95) indicator.classList.add('confidence-high');
+                            else if (avgConfidence > 0.80) indicator.classList.add('confidence-medium');
+                            else indicator.classList.add('confidence-low');
+                            indicator.title = `Confianza OCR promedio: ${(avgConfidence * 100).toFixed(1)}%`;
+                            textDiv.appendChild(indicator);
+                        }
+                        
+                        // Event listener para selección
+                        textDiv.addEventListener('click', () => {
+                            this.selectTextRegion(textDiv);
+                        });
+                        
+                        regionDiv.appendChild(textDiv);
+                        container.appendChild(regionDiv);
+                    }
+                });
+            }
+
+            createMetadata(xmlDoc, pageNumber) {
+                const metadataDiv = document.createElement('div');
+                metadataDiv.className = 'metadata';
+                
+                const created = xmlDoc.querySelector('Created')?.textContent;
+                const lastChange = xmlDoc.querySelector('LastChange')?.textContent;
+                
+                metadataDiv.innerHTML = `
+                    <h3>📋 Información de la Página ${pageNumber}</h3>
+                    <p><strong>Herramienta de transcripción:</strong> eScriptorium</p>
+                    <p><strong>Formato:</strong> PAGE XML (versión 2019-07-15, estándar internacional)</p>
+                    <p><strong>Corrección:</strong> Revisión humana posterior a la transcripción automática</p>
+                    <p><strong>Modelo de transcripción:</strong> Catmus-print-fondue-large refinado para prensa histórico-musical en español. <a href="https://zenodo.org/records/16631496" target="_blank">https://zenodo.org/records/16631496</a></p>
+                    <p><strong>Fecha de creación:</strong> ${created ? new Date(created).toLocaleDateString('es-ES') : 'No disponible'}</p>
+                    <p><strong>Última modificación:</strong> ${lastChange ? new Date(lastChange).toLocaleDateString('es-ES') : 'No disponible'}</p>
+                `;
+                
+                return metadataDiv;
+            }
+
+            displayStaticTranscription(pageNumber) {
+                const container = document.getElementById('transcriptionContainer');
+                container.innerHTML = '';
+
+                // Metadatos para transcripción estática
+                const metadata = document.createElement('div');
+                metadata.className = 'metadata';
+                metadata.innerHTML = `
+                    <h3>📋 Información de la Página ${pageNumber}</h3>
+                    <p><strong>Herramienta de transcripción:</strong> eScriptorium</p>
+                    <p><strong>Formato:</strong> PAGE XML (versión 2019-07-15, estándar internacional)</p>
+                    <p><strong>Corrección:</strong> Revisión humana posterior a la transcripción automática</p>
+                    <p><strong>Modelo de transcripción:</strong> Catmus-print-fondue-large refinado para prensa histórico-musical en español. <a href="https://zenodo.org/records/16631496" target="_blank">https://zenodo.org/records/16631496</a></p>
+                `;
+                container.appendChild(metadata);
+
+                // Obtener el texto de la transcripción
+                const transcriptionText = this.staticTranscriptions[pageNumber];
+                
+                // Dividir en párrafos y crear elementos
+                const paragraphs = transcriptionText.split('\n\n');
+                paragraphs.forEach((paragraph, index) => {
+                    if (paragraph.trim()) {
+                        const regionDiv = document.createElement('div');
+                        regionDiv.className = 'text-region';
+                        regionDiv.setAttribute('data-region', index);
+                        
+                        const textDiv = document.createElement('div');
+                        textDiv.className = 'text-content';
+                        textDiv.setAttribute('data-region', index);
+                        
+                        // Preservar saltos de línea dentro del párrafo
+                        const lines = paragraph.split('\n');
+                        lines.forEach((line, lineIndex) => {
+                            if (line.trim()) {
+                                const lineSpan = document.createElement('span');
+                                lineSpan.textContent = line;
+                                lineSpan.style.display = 'block';
+                                lineSpan.style.marginBottom = '4px';
+                                textDiv.appendChild(lineSpan);
+                            }
+                        });
+                        
+                        // Indicador de alta confianza para transcripciones estáticas
+                        const indicator = document.createElement('span');
+                        indicator.className = 'confidence-indicator confidence-high';
+                        indicator.title = 'Transcripción verificada manualmente: 100%';
+                        textDiv.appendChild(indicator);
+                        
+                        // Event listener para selección
+                        textDiv.addEventListener('click', () => {
+                            this.selectTextRegion(textDiv);
+                        });
+                        
+                        regionDiv.appendChild(textDiv);
+                        container.appendChild(regionDiv);
+                    }
+                });
+            }
+
+            selectTextRegion(textElement) {
+                // Remover selecciones anteriores
+                document.querySelectorAll('.text-content.selected').forEach(el => {
+                    el.classList.remove('selected');
+                });
+                document.querySelectorAll('.text-line.selected').forEach(el => {
+                    el.classList.remove('selected');
+                });
+                
+                // Seleccionar elemento actual
+                textElement.classList.add('selected');
+                
+                // Resaltar región padre
+                document.querySelectorAll('.text-region.highlighted').forEach(el => {
+                    el.classList.remove('highlighted');
+                });
+                textElement.parentElement.classList.add('highlighted');
+                
+                // Scroll al elemento seleccionado
+                textElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+
+            selectTextLine(lineElement) {
+                // Remover selecciones anteriores
+                document.querySelectorAll('.text-line.selected').forEach(el => {
+                    el.classList.remove('selected');
+                });
+                
+                // Seleccionar línea actual
+                lineElement.classList.add('selected');
+                
+                // Resaltar región padre
+                document.querySelectorAll('.text-region.highlighted').forEach(el => {
+                    el.classList.remove('highlighted');
+                });
+                lineElement.parentElement.classList.add('highlighted');
+                
+                // Scroll a la línea seleccionada
+                lineElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+
+            searchText(query) {
+                const searchResults = document.getElementById('searchResults');
+                
+                if (!query.trim() || query.length < 3) {
+                    this.clearSearch();
+                    searchResults.style.display = 'none';
+                    return;
+                }
+
+                // Search across all pages in staticTranscriptions
+                const results = [];
+                const searchLower = query.toLowerCase();
+
+                Object.keys(this.staticTranscriptions).forEach(pageNum => {
+                    const transcription = this.staticTranscriptions[pageNum];
+                    const transcriptionLower = transcription.toLowerCase();
+                    
+                    // Find all matches in this page
+                    let index = 0;
+                    while ((index = transcriptionLower.indexOf(searchLower, index)) !== -1) {
+                        // Get context around the match (50 characters before and after)
+                        const start = Math.max(0, index - 50);
+                        const end = Math.min(transcription.length, index + searchLower.length + 50);
+                        let context = transcription.substring(start, end);
+                        
+                        // Add ellipsis if we truncated
+                        if (start > 0) context = '...' + context;
+                        if (end < transcription.length) context = context + '...';
+                        
+                        // Highlight the match in the context
+                        const matchStart = context.toLowerCase().indexOf(searchLower);
+                        if (matchStart !== -1) {
+                            const highlightedContext = 
+                                context.substring(0, matchStart) +
+                                '<mark>' + context.substring(matchStart, matchStart + searchLower.length) + '</mark>' +
+                                context.substring(matchStart + searchLower.length);
+                            
+                            results.push({
+                                page: parseInt(pageNum),
+                                context: highlightedContext,
+                                position: index
+                            });
+                        }
+                        
+                        index += searchLower.length;
+                    }
+                });
+
+                // Display results
+                if (results.length > 0) {
+                    let html = `<div class="search-results-header">
+                        <strong>${results.length} resultado${results.length > 1 ? 's' : ''} encontrado${results.length > 1 ? 's' : ''} para "${query}"</strong>
+                    </div>`;
+                    
+                    results.forEach((result, i) => {
+                        html += `<div class="search-result-item" data-page="${result.page}" data-position="${result.position}">
+                            <div class="search-result-page">Página ${result.page}</div>
+                            <div class="search-result-context">${result.context}</div>
+                        </div>`;
+                    });
+                    
+                    searchResults.innerHTML = html;
+                    searchResults.style.display = 'block';
+                    
+                    // Add click handlers to search results
+                    searchResults.querySelectorAll('.search-result-item').forEach(item => {
+                        item.addEventListener('click', () => {
+                            const targetPage = parseInt(item.dataset.page);
+                            this.goToPage(targetPage);
+                            searchResults.style.display = 'none';
+                        });
+                    });
+                } else {
+                    searchResults.innerHTML = `<div class="search-results-header">
+                        <strong>No se encontraron resultados para "${query}"</strong>
+                    </div>`;
+                    searchResults.style.display = 'block';
+                }
+            }
+
+            clearSearch() {
+                document.querySelectorAll('.text-content.selected, .text-line.selected').forEach(el => {
+                    el.classList.remove('selected');
+                });
+                document.querySelectorAll('.text-region.highlighted').forEach(el => {
+                    el.classList.remove('highlighted');
+                });
+                const searchResults = document.getElementById('searchResults');
+                if (searchResults) {
+                    searchResults.style.display = 'none';
+                    searchResults.innerHTML = '';
+                }
+            }
+
+            updateNavigation() {
+                const pageSelect = document.getElementById('pageSelect');
+                const pageInfo = document.getElementById('pageInfo');
+                const pageCounter = document.getElementById('pageCounter');
+                const prevBtn = document.getElementById('prevBtn');
+                const nextBtn = document.getElementById('nextBtn');
+
+                pageSelect.value = this.currentPage;
+                pageInfo.textContent = `Página ${this.currentPage} de 27`;
+                pageCounter.textContent = `Página ${this.currentPage} de 27 páginas digitalizadas`;
+
+                prevBtn.disabled = this.currentPageIndex === 0;
+                nextBtn.disabled = this.currentPageIndex === this.pages.length - 1;
+            }
+
+            goToPage(pageNumber) {
+                if (this.pages.includes(pageNumber)) {
+                    this.loadPage(pageNumber);
+                }
+            }
+
+            previousPage() {
+                if (this.currentPageIndex > 0) {
+                    const prevPageNumber = this.pages[this.currentPageIndex - 1];
+                    this.loadPage(prevPageNumber);
+                }
+            }
+
+            nextPage() {
+                if (this.currentPageIndex < this.pages.length - 1) {
+                    const nextPageNumber = this.pages[this.currentPageIndex + 1];
+                    this.loadPage(nextPageNumber);
+                }
+            }
+
+            zoomIn() {
+                this.zoomLevel = Math.min(this.zoomLevel * 1.2, 3);
+                this.applyZoom();
+            }
+
+            zoomOut() {
+                this.zoomLevel = Math.max(this.zoomLevel * 0.8, 0.5);
+                this.applyZoom();
+            }
+
+            resetZoom() {
+                this.zoomLevel = 1;
+                this.applyZoom();
+            }
+
+            toggleZoom() {
+                const img = document.getElementById('pageImage');
+                if (img.classList.contains('zoomed')) {
+                    this.resetZoom();
+                    img.classList.remove('zoomed');
+                } else {
+                    this.zoomLevel = 1.5;
+                    this.applyZoom();
+                    img.classList.add('zoomed');
+                }
+            }
+
+            applyZoom() {
+                const img = document.getElementById('pageImage');
+                img.style.transform = `scale(${this.zoomLevel})`;
+            }
+
+            showError(message) {
+                const container = document.getElementById('transcriptionContainer');
+                container.innerHTML = `<div class="error">${message}</div>`;
+            }
+
+            showTranscriptionError() {
+                const container = document.getElementById('transcriptionContainer');
+                container.innerHTML = `
+                    <div class="error">
+                        <h3>⚠️ Error al cargar la transcripción</h3>
+                        <p>No se pudo cargar el archivo XML de transcripción para esta página.</p>
+                        <p>Verifique que el archivo esté disponible en la carpeta PAGE XML.</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Inicializar el visor cuando la página esté cargada
+        document.addEventListener('DOMContentLoaded', () => {
+            new RevistaViewer();
+        });
+    </script>
+</body>
+</html>

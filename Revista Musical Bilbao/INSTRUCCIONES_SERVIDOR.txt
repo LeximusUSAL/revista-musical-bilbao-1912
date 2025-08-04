@@ -1,0 +1,57 @@
+🌐 CÓMO SOLUCIONAR EL ERROR DE CARGA DE ARCHIVOS XML
+==================================================
+
+PROBLEMA:
+- Los navegadores bloquean el acceso a archivos locales por seguridad
+- No pueden cargar archivos XML/PNG desde file://
+
+SOLUCIONES:
+
+📌 OPCIÓN 1: SERVIDOR HTTP LOCAL (RECOMENDADA)
+--------------------------------------------
+1. Abrir Terminal (Aplicaciones > Utilidades > Terminal)
+
+2. Navegar al Desktop:
+   cd /Users/maria/Desktop
+
+3. Iniciar servidor HTTP:
+   python3 -m http.server 8000
+
+4. Abrir navegador y ir a:
+   http://localhost:8000/revista_musical_bilbao_viewer.html
+
+5. ¡El visor funcionará perfectamente!
+
+📌 OPCIÓN 2: NAVEGADOR CON CORS DESHABILITADO
+-------------------------------------------
+1. Cerrar completamente Chrome/Safari
+2. Abrir Terminal
+3. Ejecutar (para Chrome):
+   open -n -a /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --args --user-data-dir="/tmp/chrome_dev_test" --disable-web-security --disable-features=VizDisplayCompositor
+
+4. Abrir el archivo HTML en esta ventana especial
+
+📌 OPCIÓN 3: USAR FIREFOX
+------------------------
+1. Abrir Firefox
+2. Ir a about:config
+3. Buscar: security.fileuri.strict_origin_policy
+4. Cambiar a false
+5. Abrir el archivo HTML
+
+📌 OPCIÓN 4: SERVIDOR CON LIVE SERVER (VS CODE)
+----------------------------------------------
+1. Instalar extensión "Live Server" en VS Code
+2. Abrir la carpeta Desktop en VS Code
+3. Click derecho en revista_musical_bilbao_viewer.html
+4. Seleccionar "Open with Live Server"
+
+==================================================
+
+✅ LA OPCIÓN 1 ES LA MÁS SENCILLA Y SEGURA
+- Solo requiere una línea de comando
+- Funciona en cualquier navegador
+- No modifica configuraciones de seguridad
+
+🔍 VERIFICACIÓN:
+Una vez iniciado el servidor, debería ver los archivos XML cargándose correctamente y la transcripción apareciendo en el panel derecho.

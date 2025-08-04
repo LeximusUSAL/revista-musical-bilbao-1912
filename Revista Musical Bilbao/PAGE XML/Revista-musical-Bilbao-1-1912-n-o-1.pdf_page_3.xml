@@ -1,0 +1,585 @@
+<?xml version="1.0" encoding="UTF-8"  standalone="yes"?>
+<PcGts xmlns="http://schema.primaresearch.org/PAGE/gts/pagecontent/2019-07-15" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://schema.primaresearch.org/PAGE/gts/pagecontent/2019-07-15 http://schema.primaresearch.org/PAGE/gts/pagecontent/2019-07-15/pagecontent.xsd">
+  <Metadata externalRef="pdf//Revista-musical-Bilbao-1-1912-n-o-1.pdf">
+	<Creator>escriptorium</Creator>
+	<Created>2025-07-08T10:56:38.858712+00:00</Created>
+        <LastChange>2025-07-08T11:02:29.184405+00:00</LastChange>
+  </Metadata>
+  <Page imageFilename="Revista-musical-Bilbao-1-1912-n-o-1.pdf_page_3.png" imageWidth="1841" imageHeight="3010">
+    <TextRegion id="eSc_textblock_bf6170a3"  custom="structure {type:text;}">
+      <Coords points="1471,40 1611,40 1625,60 1625,118 1544,285 1057,319 989,347 1076,394 1042,439 669,446 615,419 642,366 620,339 194,299 133,259 133,113 167,80 1283,80 1471,40"/>
+      <TextLine id="eSc_line_f434e8f8" custom="structure {type:default;}">
+        <Coords points="1579,40 1563,40 1546,40 1529,40 1528,40 1462,40 1464,61 1464,71 1598,73 1599,58 1594,40 1579,40"/>
+        <Baseline points="1464,61 1599,58"/>
+        <TextEquiv conf="0.9856321811676025">
+          <Unicode>~</Unicode>
+        </TextEquiv>
+        <Word id="word_0">
+          <Coords points="1479,40 1479,71 1479,71 1479,40"/>
+          <Glyph id="char_0">
+            <Coords points="1479,40 1479,71 1479,71 1479,40"/>
+            <TextEquiv conf="0.9856">
+              <Unicode>~</Unicode>
+            </TextEquiv>
+          </Glyph>
+        </Word>
+      </TextLine>
+      <TextLine id="eSc_line_a3dd10f4" custom="structure {type:default;}">
+        <Coords points="1497,112 1497,130 1603,130 1603,112 1599,68 1568,76 1538,63 1536,63 1534,63 1533,63 1531,63 1531,65 1516,80 1497,80 1497,112"/>
+        <Baseline points="1497,112 1603,112"/>
+        <TextEquiv conf="0.9833106398582458">
+          <Unicode>S 1</Unicode>
+        </TextEquiv>
+        <Word id="word_0">
+          <Coords points="1539,63 1539,130 1539,130 1539,63"/>
+          <Glyph id="char_0">
+            <Coords points="1539,63 1539,130 1539,130 1539,63"/>
+            <TextEquiv conf="0.9911">
+              <Unicode>S</Unicode>
+            </TextEquiv>
+          </Glyph>
+        </Word>
+        <Word id="word_2">
+          <Coords points="1585,72 1585,130 1585,130 1585,72"/>
+          <Glyph id="char_0">
+            <Coords points="1585,72 1585,130 1585,130 1585,72"/>
+            <TextEquiv conf="0.9594">
+              <Unicode>1</Unicode>
+            </TextEquiv>
+          </Glyph>
+        </Word>
+      </TextLine>
+      <TextLine id="eSc_line_423c1451" custom="structure {type:default;}">
+        <Coords points="155,244 155,264 450,264 465,274 466,274 468,274 470,275 577,275 577,274 579,274 580,274 595,264 681,274 682,274 684,274 699,265 711,275 712,275 714,275 716,277 805,277 805,275 806,275 808,275 821,265 858,275 860,275 861,277 997,277 997,275 999,275 1000,275 1012,265 1032,275 1034,275 1035,275 1037,275 1076,265 1109,274 1111,274 1112,274 1196,265 1240,275 1241,275 1243,275 1245,275 1270,265 1318,275 1320,275 1322,275 1323,275 1337,265 1350,275 1352,275 1353,275 1355,277 1519,277 1519,275 1521,275 1523,275 1534,264 1536,254 1533,120 1189,120 1159,108 1158,108 1156,108 1154,108 1121,118 1092,110 1091,110 1089,110 997,118 870,110 868,110 866,110 865,110 853,120 711,120 686,108 684,108 682,108 594,117 552,107 550,107 548,107 547,107 513,117 480,105 478,105 476,105 475,105 451,117 425,105 423,105 421,105 420,105 393,113 383,105 381,105 379,105 292,105 291,105 289,105 254,117 239,105 237,105 235,105 234,105 155,105 155,244"/>
+        <Baseline points="155,244 562,257 1536,254"/>
+        <TextEquiv>
+          <Unicode>REVISTA MUSICAL</Unicode>
+        </TextEquiv>
+      </TextLine>
+      <TextLine id="eSc_line_b2e3b8a3" custom="structure {type:default;}">
+        <Coords points="647,414 647,429 786,438 788,438 789,438 813,428 821,436 821,438 823,438 825,438 826,439 908,439 908,438 999,426 999,414 999,394 647,394 647,414"/>
+        <Baseline points="647,414 999,414"/>
+        <TextEquiv>
+          <Unicode></Unicode>
+        </TextEquiv>
+      </TextLine>
+    </TextRegion>
+    <TextRegion id="eSc_textblock_5279c68a"  custom="structure {type:text;}">
+      <Coords points="500,668 1203,675 1256,688 1256,714 1203,754 441,747 435,688 500,668"/>
+      <TextLine id="eSc_line_a30302c4" custom="structure {type:default;}">
+        <Coords points="1231,687 445,687 445,722 445,737 1240,737 1240,722 1238,719 1231,687"/>
+        <Baseline points="445,722 1240,722"/>
+        <TextEquiv>
+          <Unicode>SE PUBLICA UNA VEZ AL MES</Unicode>
+        </TextEquiv>
+      </TextLine>
+    </TextRegion>
+    <TextRegion id="eSc_textblock_e1f9face"  custom="structure {type:text;}">
+      <Coords points="768,1091 1009,1096 1042,1110 1049,1162 1022,1188 649,1175 656,1103 768,1091"/>
+      <TextLine id="eSc_line_432ad541" custom="structure {type:default;}">
+        <Coords points="656,1153 654,1172 656,1173 657,1173 657,1175 659,1175 661,1175 662,1177 768,1177 768,1175 769,1175 808,1165 843,1177 845,1177 846,1177 848,1177 850,1177 866,1167 913,1167 923,1175 923,1177 925,1177 927,1177 928,1177 1030,1168 1032,1157 1032,1120 1019,1108 1019,1107 1017,1107 1015,1107 1014,1107 972,1115 950,1107 948,1107 947,1107 945,1107 913,1123 878,1123 865,1110 865,1108 863,1108 861,1108 860,1108 858,1108 856,1108 848,1117 838,1108 838,1107 836,1107 835,1107 833,1107 831,1107 784,1120 769,1108 769,1107 768,1107 766,1107 764,1107 763,1107 738,1113 706,1105 704,1105 702,1105 701,1105 699,1105 699,1107 687,1117 679,1110 677,1110 676,1110 674,1110 672,1110 656,1118 656,1153"/>
+        <Baseline points="656,1153 1032,1157"/>
+        <TextEquiv>
+          <Unicode>AÑO IV - 1912</Unicode>
+        </TextEquiv>
+      </TextLine>
+    </TextRegion>
+    <TextRegion id="eSc_textblock_b7f462d0"  custom="structure {type:text;}">
+      <Coords points="520,2448 1183,2454 1189,2493 1091,2506 1035,2566 649,2566 627,2506 502,2499 520,2448"/>
+      <TextLine id="eSc_line_6d00fc22" custom="structure {type:default;}">
+        <Coords points="1171,2453 515,2453 503,2476 503,2484 503,2498 1183,2494 1184,2479 1179,2459 1171,2453"/>
+        <Baseline points="503,2484 1184,2479"/>
+        <TextEquiv conf="0.99874907290494">
+          <Unicode>REDACCION Y ADMINISTRACION.</Unicode>
+        </TextEquiv>
+        <Word id="word_0">
+          <Coords points="518,2453 518,2498 518,2498 518,2453 546,2453 546,2498 546,2498 546,2453 571,2453 571,2498 571,2498 571,2453 605,2453 605,2497 605,2497 605,2453 629,2453 629,2497 629,2497 629,2453 660,2453 660,2497 660,2497 660,2453 688,2453 688,2497 688,2497 688,2453 700,2453 700,2497 700,2497 700,2453 731,2453 731,2497 731,2497 731,2453"/>
+          <Glyph id="char_0">
+            <Coords points="518,2453 518,2498 518,2498 518,2453"/>
+            <TextEquiv conf="0.9974">
+              <Unicode>R</Unicode>
+            </TextEquiv>
+          </Glyph>
+          <Glyph id="char_1">
+            <Coords points="546,2453 546,2498 546,2498 546,2453"/>
+            <TextEquiv conf="0.9993">
+              <Unicode>E</Unicode>
+            </TextEquiv>
+          </Glyph>
+          <Glyph id="char_2">
+            <Coords points="571,2453 571,2498 571,2498 571,2453"/>
+            <TextEquiv conf="1.0000">
+              <Unicode>D</Unicode>
+            </TextEquiv>
+          </Glyph>
+          <Glyph id="char_3">
+            <Coords points="605,2453 605,2497 605,2497 605,2453"/>
+            <TextEquiv conf="1.0000">
+              <Unicode>A</Unicode>
+            </TextEquiv>
+          </Glyph>
+          <Glyph id="char_4">
+            <Coords points="629,2453 629,2497 629,2497 629,2453"/>
+            <TextEquiv conf="0.9996">
+              <Unicode>C</Unicode>
+            </TextEquiv>
+          </Glyph>
+          <Glyph id="char_5">
+            <Coords points="660,2453 660,2497 660,2497 660,2453"/>
+            <TextEquiv conf="0.9998">
+              <Unicode>C</Unicode>
+            </TextEquiv>
+          </Glyph>
+          <Glyph id="char_6">
+            <Coords points="688,2453 688,2497 688,2497 688,2453"/>
+            <TextEquiv conf="1.0000">
+              <Unicode>I</Unicode>
+            </TextEquiv>
+          </Glyph>
+          <Glyph id="char_7">
+            <Coords points="700,2453 700,2497 700,2497 700,2453"/>
+            <TextEquiv conf="1.0000">
+              <Unicode>O</Unicode>
+            </TextEquiv>
+          </Glyph>
+          <Glyph id="char_8">
+            <Coords points="731,2453 731,2497 731,2497 731,2453"/>
+            <TextEquiv conf="0.9992">
+              <Unicode>N</Unicode>
+            </TextEquiv>
+          </Glyph>
+        </Word>
+        <Word id="word_2">
+          <Coords points="783,2453 783,2496 783,2496 783,2453"/>
+          <Glyph id="char_0">
+            <Coords points="783,2453 783,2496 783,2496 783,2453"/>
+            <TextEquiv conf="0.9962">
+              <Unicode>Y</Unicode>
+            </TextEquiv>
+          </Glyph>
+        </Word>
+        <Word id="word_4">
+          <Coords points="833,2453 833,2496 833,2496 833,2453 857,2453 857,2496 857,2496 857,2453 888,2453 888,2496 888,2496 888,2453 919,2453 919,2496 919,2496 919,2453 934,2453 934,2495 934,2495 934,2453 959,2453 959,2495 959,2495 959,2453 971,2453 971,2495 971,2495 971,2453 1005,2453 1005,2495 1005,2495 1005,2453 1024,2453 1024,2495 1024,2495 1024,2453 1051,2453 1051,2495 1051,2495 1051,2453 1079,2453 1079,2495 1079,2495 1079,2453 1107,2453 1107,2494 1107,2494 1107,2453 1119,2453 1119,2494 1119,2494 1119,2453 1150,2453 1150,2494 1150,2494 1150,2453 1181,2467 1181,2494 1181,2494 1181,2467"/>
+          <Glyph id="char_0">
+            <Coords points="833,2453 833,2496 833,2496 833,2453"/>
+            <TextEquiv conf="0.9999">
+              <Unicode>A</Unicode>
+            </TextEquiv>
+          </Glyph>
+          <Glyph id="char_1">
+            <Coords points="857,2453 857,2496 857,2496 857,2453"/>
+            <TextEquiv conf="1.0000">
+              <Unicode>D</Unicode>
+            </TextEquiv>
+          </Glyph>
+          <Glyph id="char_2">
+            <Coords points="888,2453 888,2496 888,2496 888,2453"/>
+            <TextEquiv conf="0.9999">
+              <Unicode>M</Unicode>
+            </TextEquiv>
+          </Glyph>
+          <Glyph id="char_3">
+            <Coords points="919,2453 919,2496 919,2496 919,2453"/>
+            <TextEquiv conf="0.9978">
+              <Unicode>I</Unicode>
+            </TextEquiv>
+          </Glyph>
+          <Glyph id="char_4">
+            <Coords points="934,2453 934,2495 934,2495 934,2453"/>
+            <TextEquiv conf="0.9994">
+              <Unicode>N</Unicode>
+            </TextEquiv>
+          </Glyph>
+          <Glyph id="char_5">
+            <Coords points="959,2453 959,2495 959,2495 959,2453"/>
+            <TextEquiv conf="1.0000">
+              <Unicode>I</Unicode>
+            </TextEquiv>
+          </Glyph>
+          <Glyph id="char_6">
+            <Coords points="971,2453 971,2495 971,2495 971,2453"/>
+            <TextEquiv conf="1.0000">
+              <Unicode>S</Unicode>
+            </TextEquiv>
+          </Glyph>
+          <Glyph id="char_7">
+            <Coords points="1005,2453 1005,2495 1005,2495 1005,2453"/>
+            <TextEquiv conf="0.9999">
+              <Unicode>T</Unicode>
+            </TextEquiv>
+          </Glyph>
+          <Glyph id="char_8">
+            <Coords points="1024,2453 1024,2495 1024,2495 1024,2453"/>
+            <TextEquiv conf="0.9986">
+              <Unicode>R</Unicode>
+            </TextEquiv>
+          </Glyph>
+          <Glyph id="char_9">
+            <Coords points="1051,2453 1051,2495 1051,2495 1051,2453"/>
+            <TextEquiv conf="0.9996">
+              <Unicode>A</Unicode>
+            </TextEquiv>
+          </Glyph>
+          <Glyph id="char_10">
+            <Coords points="1079,2453 1079,2495 1079,2495 1079,2453"/>
+            <TextEquiv conf="0.9999">
+              <Unicode>C</Unicode>
+            </TextEquiv>
+          </Glyph>
+          <Glyph id="char_11">
+            <Coords points="1107,2453 1107,2494 1107,2494 1107,2453"/>
+            <TextEquiv conf="0.9806">
+              <Unicode>I</Unicode>
+            </TextEquiv>
+          </Glyph>
+          <Glyph id="char_12">
+            <Coords points="1119,2453 1119,2494 1119,2494 1119,2453"/>
+            <TextEquiv conf="0.9999">
+              <Unicode>O</Unicode>
+            </TextEquiv>
+          </Glyph>
+          <Glyph id="char_13">
+            <Coords points="1150,2453 1150,2494 1150,2494 1150,2453"/>
+            <TextEquiv conf="0.9998">
+              <Unicode>N</Unicode>
+            </TextEquiv>
+          </Glyph>
+          <Glyph id="char_14">
+            <Coords points="1181,2467 1181,2494 1181,2494 1181,2467"/>
+            <TextEquiv conf="0.9997">
+              <Unicode>.</Unicode>
+            </TextEquiv>
+          </Glyph>
+        </Word>
+      </TextLine>
+      <TextLine id="eSc_line_224b9ac7" custom="structure {type:default;}">
+        <Coords points="652,2548 652,2561 1041,2556 1041,2541 1037,2518 657,2515 656,2515 654,2515 652,2515 652,2516 651,2516 652,2548"/>
+        <Baseline points="652,2548 1041,2541"/>
+        <TextEquiv conf="0.9917779775226817">
+          <Unicode>RONDA, 50.—BILBAO</Unicode>
+        </TextEquiv>
+        <Word id="word_0">
+          <Coords points="667,2515 668,2561 668,2561 667,2515 690,2515 691,2560 691,2560 690,2515 715,2515 716,2560 716,2560 715,2515 738,2516 739,2560 739,2560 738,2516 764,2516 765,2560 765,2560 764,2516 783,2516 784,2559 784,2559 783,2516"/>
+          <Glyph id="char_0">
+            <Coords points="667,2515 668,2561 668,2561 667,2515"/>
+            <TextEquiv conf="0.9618">
+              <Unicode>R</Unicode>
+            </TextEquiv>
+          </Glyph>
+          <Glyph id="char_1">
+            <Coords points="690,2515 691,2560 691,2560 690,2515"/>
+            <TextEquiv conf="0.9997">
+              <Unicode>O</Unicode>
+            </TextEquiv>
+          </Glyph>
+          <Glyph id="char_2">
+            <Coords points="715,2515 716,2560 716,2560 715,2515"/>
+            <TextEquiv conf="0.9943">
+              <Unicode>N</Unicode>
+            </TextEquiv>
+          </Glyph>
+          <Glyph id="char_3">
+            <Coords points="738,2516 739,2560 739,2560 738,2516"/>
+            <TextEquiv conf="0.9888">
+              <Unicode>D</Unicode>
+            </TextEquiv>
+          </Glyph>
+          <Glyph id="char_4">
+            <Coords points="764,2516 765,2560 765,2560 764,2516"/>
+            <TextEquiv conf="0.9770">
+              <Unicode>A</Unicode>
+            </TextEquiv>
+          </Glyph>
+          <Glyph id="char_5">
+            <Coords points="783,2516 784,2559 784,2559 783,2516"/>
+            <TextEquiv conf="1.0000">
+              <Unicode>,</Unicode>
+            </TextEquiv>
+          </Glyph>
+        </Word>
+        <Word id="word_2">
+          <Coords points="815,2516 816,2559 816,2559 815,2516 828,2516 829,2559 829,2559 828,2516 848,2517 849,2558 849,2558 848,2517 864,2517 865,2558 865,2558 864,2517 896,2517 897,2558 897,2558 896,2517 922,2517 923,2558 923,2558 922,2517 935,2517 936,2557 936,2557 935,2517 957,2517 958,2557 958,2557 957,2517 987,2518 987,2557 987,2557 987,2518 1013,2518 1013,2556 1013,2556 1013,2518"/>
+          <Glyph id="char_0">
+            <Coords points="815,2516 816,2559 816,2559 815,2516"/>
+            <TextEquiv conf="0.9888">
+              <Unicode>5</Unicode>
+            </TextEquiv>
+          </Glyph>
+          <Glyph id="char_1">
+            <Coords points="828,2516 829,2559 829,2559 828,2516"/>
+            <TextEquiv conf="0.9986">
+              <Unicode>0</Unicode>
+            </TextEquiv>
+          </Glyph>
+          <Glyph id="char_2">
+            <Coords points="848,2517 849,2558 849,2558 848,2517"/>
+            <TextEquiv conf="0.9925">
+              <Unicode>.</Unicode>
+            </TextEquiv>
+          </Glyph>
+          <Glyph id="char_3">
+            <Coords points="864,2517 865,2558 865,2558 864,2517"/>
+            <TextEquiv conf="1.0000">
+              <Unicode>—</Unicode>
+            </TextEquiv>
+          </Glyph>
+          <Glyph id="char_4">
+            <Coords points="896,2517 897,2558 897,2558 896,2517"/>
+            <TextEquiv conf="0.9946">
+              <Unicode>B</Unicode>
+            </TextEquiv>
+          </Glyph>
+          <Glyph id="char_5">
+            <Coords points="922,2517 923,2558 923,2558 922,2517"/>
+            <TextEquiv conf="1.0000">
+              <Unicode>I</Unicode>
+            </TextEquiv>
+          </Glyph>
+          <Glyph id="char_6">
+            <Coords points="935,2517 936,2557 936,2557 935,2517"/>
+            <TextEquiv conf="0.9996">
+              <Unicode>L</Unicode>
+            </TextEquiv>
+          </Glyph>
+          <Glyph id="char_7">
+            <Coords points="957,2517 958,2557 958,2557 957,2517"/>
+            <TextEquiv conf="0.9998">
+              <Unicode>B</Unicode>
+            </TextEquiv>
+          </Glyph>
+          <Glyph id="char_8">
+            <Coords points="987,2518 987,2557 987,2557 987,2518"/>
+            <TextEquiv conf="0.9850">
+              <Unicode>A</Unicode>
+            </TextEquiv>
+          </Glyph>
+          <Glyph id="char_9">
+            <Coords points="1013,2518 1013,2556 1013,2556 1013,2518"/>
+            <TextEquiv conf="0.9799">
+              <Unicode>O</Unicode>
+            </TextEquiv>
+          </Glyph>
+        </Word>
+      </TextLine>
+    </TextRegion>
+    <TextRegion id="eSc_textblock_d5baf0b6"  custom="structure {type:text;}">
+      <Coords points="830,1678 915,1685 935,1745 915,1790 789,1797 769,1777 789,1692 830,1678"/>
+      <TextLine id="eSc_line_1d5aa7a7" custom="structure {type:default;}">
+        <Coords points="789,1770 789,1779 863,1790 865,1790 866,1790 898,1777 898,1769 897,1742 848,1729 846,1729 845,1729 843,1729 823,1737 815,1729 815,1727 813,1727 811,1727 810,1727 808,1727 788,1735 789,1770"/>
+        <Baseline points="789,1770 898,1769"/>
+        <TextEquiv conf="0.9109078049659729">
+          <Unicode>e</Unicode>
+        </TextEquiv>
+        <Word id="word_0">
+          <Coords points="798,1731 798,1780 798,1780 798,1731"/>
+          <Glyph id="char_0">
+            <Coords points="798,1731 798,1780 798,1780 798,1731"/>
+            <TextEquiv conf="0.9109">
+              <Unicode>e</Unicode>
+            </TextEquiv>
+          </Glyph>
+        </Word>
+      </TextLine>
+      <TextLine id="eSc_line_5485d190" >
+        <Coords points="52,1984 52,1984 75,1981 100,1984 128,1984 130,1984 773,1788 771,1770 796,1765 821,1765 848,1765 853,1765 871,1760 866,1735 856,1715 47,1971 52,1984"/>
+        <Baseline points="867,1737 55,1986"/>
+        <TextEquiv>
+          <Unicode></Unicode>
+        </TextEquiv>
+      </TextLine>
+    </TextRegion>
+    <TextRegion id="eSc_textblock_74e2f57d"  custom="structure {type:text;}">
+      <Coords points="527,2949 1290,2949 1330,2981 1323,3008 515,3008 527,2949"/>
+      <TextLine id="eSc_line_a705f746" custom="structure {type:default;}">
+        <Coords points="1308,2966 1297,2956 707,2949 706,2949 689,2949 672,2949 656,2949 639,2949 622,2949 605,2949 589,2949 579,2949 570,2956 545,2949 538,2949 522,2964 523,2989 523,3004 1313,3003 1315,2988 1312,2968 1308,2966"/>
+        <Baseline points="523,2989 1315,2988"/>
+        <TextEquiv conf="0.9121493973902294">
+          <Unicode>Biblioteca Naconal de Espana</Unicode>
+        </TextEquiv>
+        <Word id="word_0">
+          <Coords points="589,2949 589,3004 589,3004 589,2949 626,2949 626,3004 626,3004 626,2949 640,2949 640,3004 640,3004 640,2949 670,2949 670,3004 670,3004 670,2949 685,2949 685,3004 685,3004 685,2949 699,2949 699,3004 699,3004 699,2949 729,2949 729,3004 729,3004 729,2949 743,2949 743,3004 743,3004 743,2949 773,2950 773,3004 773,3004 773,2950 802,2950 802,3004 802,3004 802,2950"/>
+          <Glyph id="char_0">
+            <Coords points="589,2949 589,3004 589,3004 589,2949"/>
+            <TextEquiv conf="0.9981">
+              <Unicode>B</Unicode>
+            </TextEquiv>
+          </Glyph>
+          <Glyph id="char_1">
+            <Coords points="626,2949 626,3004 626,3004 626,2949"/>
+            <TextEquiv conf="0.9551">
+              <Unicode>i</Unicode>
+            </TextEquiv>
+          </Glyph>
+          <Glyph id="char_2">
+            <Coords points="640,2949 640,3004 640,3004 640,2949"/>
+            <TextEquiv conf="0.9831">
+              <Unicode>b</Unicode>
+            </TextEquiv>
+          </Glyph>
+          <Glyph id="char_3">
+            <Coords points="670,2949 670,3004 670,3004 670,2949"/>
+            <TextEquiv conf="0.9831">
+              <Unicode>l</Unicode>
+            </TextEquiv>
+          </Glyph>
+          <Glyph id="char_4">
+            <Coords points="685,2949 685,3004 685,3004 685,2949"/>
+            <TextEquiv conf="0.9670">
+              <Unicode>i</Unicode>
+            </TextEquiv>
+          </Glyph>
+          <Glyph id="char_5">
+            <Coords points="699,2949 699,3004 699,3004 699,2949"/>
+            <TextEquiv conf="0.7705">
+              <Unicode>o</Unicode>
+            </TextEquiv>
+          </Glyph>
+          <Glyph id="char_6">
+            <Coords points="729,2949 729,3004 729,3004 729,2949"/>
+            <TextEquiv conf="0.8923">
+              <Unicode>t</Unicode>
+            </TextEquiv>
+          </Glyph>
+          <Glyph id="char_7">
+            <Coords points="743,2949 743,3004 743,3004 743,2949"/>
+            <TextEquiv conf="0.9982">
+              <Unicode>e</Unicode>
+            </TextEquiv>
+          </Glyph>
+          <Glyph id="char_8">
+            <Coords points="773,2950 773,3004 773,3004 773,2950"/>
+            <TextEquiv conf="0.9818">
+              <Unicode>c</Unicode>
+            </TextEquiv>
+          </Glyph>
+          <Glyph id="char_9">
+            <Coords points="802,2950 802,3004 802,3004 802,2950"/>
+            <TextEquiv conf="0.9995">
+              <Unicode>a</Unicode>
+            </TextEquiv>
+          </Glyph>
+        </Word>
+        <Word id="word_2">
+          <Coords points="842,2951 842,3004 842,3004 842,2951 879,2951 879,3004 879,3004 879,2951 905,2951 905,3004 905,3004 905,2951 949,2952 949,3003 949,3003 949,2952 978,2952 978,3003 978,3003 978,2952 1008,2953 1008,3003 1008,3003 1008,2953 1037,2953 1037,3003 1037,3003 1037,2953"/>
+          <Glyph id="char_0">
+            <Coords points="842,2951 842,3004 842,3004 842,2951"/>
+            <TextEquiv conf="0.9566">
+              <Unicode>N</Unicode>
+            </TextEquiv>
+          </Glyph>
+          <Glyph id="char_1">
+            <Coords points="879,2951 879,3004 879,3004 879,2951"/>
+            <TextEquiv conf="0.1707">
+              <Unicode>a</Unicode>
+            </TextEquiv>
+          </Glyph>
+          <Glyph id="char_2">
+            <Coords points="905,2951 905,3004 905,3004 905,2951"/>
+            <TextEquiv conf="0.9545">
+              <Unicode>c</Unicode>
+            </TextEquiv>
+          </Glyph>
+          <Glyph id="char_3">
+            <Coords points="949,2952 949,3003 949,3003 949,2952"/>
+            <TextEquiv conf="0.9935">
+              <Unicode>o</Unicode>
+            </TextEquiv>
+          </Glyph>
+          <Glyph id="char_4">
+            <Coords points="978,2952 978,3003 978,3003 978,2952"/>
+            <TextEquiv conf="0.9894">
+              <Unicode>n</Unicode>
+            </TextEquiv>
+          </Glyph>
+          <Glyph id="char_5">
+            <Coords points="1008,2953 1008,3003 1008,3003 1008,2953"/>
+            <TextEquiv conf="0.9987">
+              <Unicode>a</Unicode>
+            </TextEquiv>
+          </Glyph>
+          <Glyph id="char_6">
+            <Coords points="1037,2953 1037,3003 1037,3003 1037,2953"/>
+            <TextEquiv conf="0.9748">
+              <Unicode>l</Unicode>
+            </TextEquiv>
+          </Glyph>
+        </Word>
+        <Word id="word_4">
+          <Coords points="1063,2953 1063,3003 1063,3003 1063,2953 1096,2954 1096,3003 1096,3003 1096,2954"/>
+          <Glyph id="char_0">
+            <Coords points="1063,2953 1063,3003 1063,3003 1063,2953"/>
+            <TextEquiv conf="0.9928">
+              <Unicode>d</Unicode>
+            </TextEquiv>
+          </Glyph>
+          <Glyph id="char_1">
+            <Coords points="1096,2954 1096,3003 1096,3003 1096,2954"/>
+            <TextEquiv conf="0.8192">
+              <Unicode>e</Unicode>
+            </TextEquiv>
+          </Glyph>
+        </Word>
+        <Word id="word_6">
+          <Coords points="1140,2954 1140,3003 1140,3003 1140,2954 1173,2955 1173,3003 1173,3003 1173,2955 1199,2955 1199,3003 1199,3003 1199,2955 1228,2955 1228,3003 1228,3003 1228,2955 1257,2956 1257,3003 1257,3003 1257,2956 1287,2956 1287,3003 1287,3003 1287,2956"/>
+          <Glyph id="char_0">
+            <Coords points="1140,2954 1140,3003 1140,3003 1140,2954"/>
+            <TextEquiv conf="0.9833">
+              <Unicode>E</Unicode>
+            </TextEquiv>
+          </Glyph>
+          <Glyph id="char_1">
+            <Coords points="1173,2955 1173,3003 1173,3003 1173,2955"/>
+            <TextEquiv conf="0.9973">
+              <Unicode>s</Unicode>
+            </TextEquiv>
+          </Glyph>
+          <Glyph id="char_2">
+            <Coords points="1199,2955 1199,3003 1199,3003 1199,2955"/>
+            <TextEquiv conf="0.9769">
+              <Unicode>p</Unicode>
+            </TextEquiv>
+          </Glyph>
+          <Glyph id="char_3">
+            <Coords points="1228,2955 1228,3003 1228,3003 1228,2955"/>
+            <TextEquiv conf="0.9112">
+              <Unicode>a</Unicode>
+            </TextEquiv>
+          </Glyph>
+          <Glyph id="char_4">
+            <Coords points="1257,2956 1257,3003 1257,3003 1257,2956"/>
+            <TextEquiv conf="0.9335">
+              <Unicode>n</Unicode>
+            </TextEquiv>
+          </Glyph>
+          <Glyph id="char_5">
+            <Coords points="1287,2956 1287,3003 1287,3003 1287,2956"/>
+            <TextEquiv conf="0.3783">
+              <Unicode>a</Unicode>
+            </TextEquiv>
+          </Glyph>
+        </Word>
+      </TextLine>
+    </TextRegion>
+    <TextRegion id="eSc_textblock_fde7ad08"  custom="structure {type:text;}">
+      <Coords points="1231,1953 1317,1999 1330,2125 1290,2192 1211,2212 1191,2158 1205,2040 1158,1986 1231,1953"/>
+    </TextRegion>
+    <TextRegion id="eSc_textblock_c62dceed"  custom="structure {type:text;}">
+      <Coords points="860,0 868,0 868,5 856,5 860,0"/>
+    </TextRegion>
+    <TextRegion id="eSc_textblock_0b72568d"  custom="structure {type:text;}">
+      <Coords points="1069,0 1069,5 1064,5 1064,0 1069,0"/>
+    </TextRegion>
+    <TextRegion id="eSc_textblock_417f024b"  custom="structure {type:text;}">
+      <Coords points="801,829 902,836 882,849 902,867 756,867 763,836 801,829"/>
+    </TextRegion>
+    <TextRegion id="eSc_dummyblock_">
+      <TextLine id="eSc_line_b032fe7b" >
+        <Coords points="120,1964 95,1971 70,1979 70,1953 45,1953 45,1984 42,1991 1238,2054 1240,2046 1240,2016 135,1956 120,1964"/>
+        <Baseline points="47,1986 1242,2047"/>
+        <TextEquiv>
+          <Unicode></Unicode>
+        </TextEquiv>
+      </TextLine>
+    </TextRegion>
+  </Page>
+</PcGts>
