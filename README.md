@@ -24,7 +24,7 @@ La **Revista Musical de Bilbao** fue una publicación musical española que circ
 
 ## 📖 Uso
 
-1. Abre `[revista_musical_bilbao_viewer.html](https://leximususal.github.io/revista-musical-bilbao-1912/revista_musical_bilbao_viewer.html)` en tu navegador web
+1. Abre [este enlace](https://leximususal.github.io/revista-musical-bilbao-1912/revista_musical_bilbao_viewer.html) en tu navegador web
 2. Navega entre páginas usando:
    - Selector de página en la parte superior
    - Botones anterior/siguiente
